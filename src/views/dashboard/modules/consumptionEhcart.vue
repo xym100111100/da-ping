@@ -14,15 +14,60 @@ export default {
   mixins: [Resize],
   data() {
     return {
-      chart: null
+      chart: null,
+      districtExplorer: null
     }
   },
-  created() {
+  async created() {
+    await this.initAmap()
     this.$nextTick(() => {
       this.initChart()
+      this.loadAreaNode(100000).then(res => {
+        console.log(res)
+      })
     })
   },
   methods: {
+    /**
+     * @description: 查询行政边界
+     * @param {number} adcode 可参考城市编码表 https://lbs.amap.com/api/webservice/download
+     * @return {*}
+     */
+    loadAreaNode(adcode) {
+      return new Promise((resolve, reject) => {
+        this.districtExplorer.loadAreaNode(adcode, function(error, areaNode) {
+          if (error) {
+            return reject(error)
+          }
+          resolve(areaNode)
+        })
+      })
+    },
+
+    /**
+     * @description: 初始化高德实例
+     * @param {*}
+     * @return {*}
+     */
+    initAmap() {
+      return new Promise((resolve, reject) => {
+        try {
+          window.AMapUI.load(
+            ['ui/geo/DistrictExplorer', 'lib/$'],
+            (DistrictExplorer, $) => {
+              // 创建一个实例
+              this.districtExplorer = (window.districtExplorer =
+            new DistrictExplorer({
+              eventSupport: true // 打开事件支持
+            }))
+              resolve()
+            }
+          )
+        } catch (error) {
+          reject(error)
+        }
+      })
+    },
     /**
      * @description: 初始化图表
      * @param {*}
