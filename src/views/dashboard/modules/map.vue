@@ -4,9 +4,11 @@
   </div>
 </template>
 <script>
+import Resize from './mixin/resize.js'
 import echarts from '@/components/useEcharts.js'
 export default {
   name: 'ElMap',
+  mixins: [Resize],
   data() {
     return {
       chart: null
