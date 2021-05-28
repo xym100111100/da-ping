@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <el-card class="box-card">
+    <div slot="header" class="clearfix">
+      <span>卡片名称</span>
+    </div>
     <div ref="main" style="width: 100%;height:400px;" />
-  </div>
+  </el-card>
 </template>
 <script>
 import Resize from './mixin/resize.js'
