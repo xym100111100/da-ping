@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="card-title">
-      <span>销售统计</span>
+      <span>广州市消费人群各项指标汇总</span>
     </div>
     <div ref="main" class="chart-box" />
   </el-card>

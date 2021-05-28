@@ -32,32 +32,43 @@ export default {
       this.chart = echarts.init(this.$refs.main)
       // 指定图表的配置项和数据
       var option = {
-        color: ['#5bcbff', '#52d9f5', '#7ea4fd', '#63e6f0'],
-        tooltip: {},
-        legend: {
-          data: ['大米', '大豆', '食用油', '面粉']
+        tooltip: {
+          trigger: 'axis'
+        },
+        grid: {
+          left: '1%',
+          right: '5%',
+          top: '6%',
+          bottom: '2%',
+          containLabel: true
         },
         xAxis: {
-          data: ['广州市', '广州市', '广州市', '广州市', '广州2市', '广州市']
+          type: 'category',
+          boundaryGap: false,
+          data: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
         },
-        yAxis: {},
-        series: [{
-          name: '大米',
-          type: 'bar',
-          data: [3000, 20, 4, 235, 235, 234]
-        }, {
-          name: '大豆',
-          type: 'bar',
-          data: [5, 233, 36, 235, 235, 20]
-        }, {
-          name: '食用油',
-          type: 'bar',
-          data: [5, 20, 234, 5235, 234, 523]
-        }, {
-          name: '面粉',
-          type: 'bar',
-          data: [5, 20, 235, 12350, 6236, 234]
-        }]
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '订单量',
+            type: 'line',
+            smooth: true,
+            areaStyle: { normal: {
+              // 折线渐变色
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0, color: '#81befd'
+              }, {
+                offset: 0.4, color: '#e4f2ff'
+              }, {
+                offset: 1, color: '#fff'
+              }]
+              )
+            }},
+            data: [100, 140, 132, 170, 210, 140, 180, 130]
+          }
+        ]
       }
 
       // 使用刚指定的配置项和数据显示图表。
