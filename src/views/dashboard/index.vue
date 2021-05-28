@@ -1,25 +1,20 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: </div>
+    <elMap ref="elMap" />
   </div>
 </template>
 
 <script>
-
+import elMap from './modules/map.vue'
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  components: {
+    elMap
+  }
 
 }
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
+
 </style>
