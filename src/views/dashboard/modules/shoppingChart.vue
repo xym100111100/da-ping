@@ -5,7 +5,22 @@
     </div>
     <div class="chart-box">
       <div ref="main" class="funnel-box" />
+      <div class="probability-box">
+        <div>
+          <el-progress :width="70" type="circle" color="#6fb0fe" :percentage="60" />
+          <p>用户增长率</p>
+        </div>
+        <div>
+          <el-progress :width="70" type="circle" color="#8ce247" :percentage="52" />
+          <p>用户转化率</p>
+        </div>
+        <div>
+          <el-progress :width="70" type="circle" color="#fecf51" :percentage="80" />
+          <p>用户流失率</p>
+        </div>
+      </div>
     </div>
+
   </el-card>
 </template>
 <script>
@@ -43,7 +58,7 @@ export default {
           {
             name: '预期',
             type: 'funnel',
-            left: '6%',
+            left: '8%',
             top: '6%',
             width: '50%',
             height: '94%',
@@ -77,11 +92,26 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .chart-box{
-    height: 300px;
-  }
+.chart-box {
+  height: 300px;
+}
 
-  .funnel-box{
-    height: 180px;
+.funnel-box {
+  height: 170px;
+}
+
+.probability-box {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+
+  > div {
+    flex: 1;
+    text-align: center;
+    p{
+      margin: 6px 0;
+      font-size: 12px;
+    }
   }
+}
 </style>
