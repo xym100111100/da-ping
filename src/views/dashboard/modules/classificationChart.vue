@@ -32,32 +32,50 @@ export default {
       this.chart = echarts.init(this.$refs.main)
       // 指定图表的配置项和数据
       var option = {
-        color: ['#5bcbff', '#52d9f5', '#7ea4fd', '#63e6f0'],
-        tooltip: {},
+        color: ['#f9798c', '#739ffa', '#38d1d3', '#fbc542', '#52c1f5'],
+        tooltip: {
+          trigger: 'item'
+        },
         legend: {
-          data: ['大米', '大豆', '食用油', '面粉']
+          top: 'center',
+          right: 'right',
+          icon: 'circle',
+          itemWidth: 20,
+          itemHeight: 10,
+          itemGap: 16,
+          formatter: function(e) {
+            return e + '  1510'
+          }
         },
-        xAxis: {
-          data: ['广州市', '广州市', '广州市', '广州市', '广州2市', '广州市']
-        },
-        yAxis: {},
-        series: [{
-          name: '大米',
-          type: 'bar',
-          data: [3000, 20, 4, 235, 235, 234]
-        }, {
-          name: '大豆',
-          type: 'bar',
-          data: [5, 233, 36, 235, 235, 20]
-        }, {
-          name: '食用油',
-          type: 'bar',
-          data: [5, 20, 234, 5235, 234, 523]
-        }, {
-          name: '面粉',
-          type: 'bar',
-          data: [5, 20, 235, 12350, 6236, 234]
-        }]
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            right: '60',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: 1048, name: '大米' },
+              { value: 735, name: '大豆' },
+              { value: 580, name: '面' },
+              { value: 484, name: '油' },
+              { value: 300, name: '其他' }
+            ]
+          }
+        ]
       }
 
       // 使用刚指定的配置项和数据显示图表。

@@ -4,7 +4,8 @@ import * as echarts from 'echarts/core'
 // 引入柱状图图表，图表后缀都为 Chart
 import {
   BarChart,
-  FunnelChart
+  FunnelChart,
+  PieChart
 } from 'echarts/charts'
 
 // 引入提示框，标题，直角坐标系组件
@@ -22,7 +23,7 @@ import {
 
 // 注册必须的组件
 echarts.use(
-  [TitleComponent, TooltipComponent, GridComponent, LegendComponent, BarChart, FunnelChart, CanvasRenderer]
+  [TitleComponent, TooltipComponent, GridComponent, LegendComponent, BarChart, PieChart, FunnelChart, CanvasRenderer]
 )
 
 export default echarts
