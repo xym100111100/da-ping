@@ -63,3 +63,15 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+// 重置element ui 组件样式
+.dashboard-container{
+  .el-card__header{
+    background-color: #f9f9f9;
+    padding: 12px 16px;
+  }
+  .el-card__body{
+    padding: 10px;
+
+  }
+}

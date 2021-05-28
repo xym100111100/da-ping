@@ -28,7 +28,7 @@ export default {
     top: 0;
     left: 0;
     height: 100%;
-    width: 4px;
+    width: 5px;
     background: #2c93ff;
   }
 
