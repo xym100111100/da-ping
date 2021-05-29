@@ -1,13 +1,8 @@
 <template>
-  <el-card class="box-card">
-    <div slot="header" class="card-title">
-      <span>实时订单趋势图</span>
-    </div>
-    <div ref="main" class="chart-box" />
-  </el-card>
+  <div ref="main" class="chart-box" />
 </template>
 <script>
-import Resize from './mixin/resize.js'
+import Resize from '../mixin/resize.js'
 import echarts from '@/components/useEcharts.js'
 export default {
   name: 'ElMap',
@@ -66,64 +61,41 @@ export default {
       this.chart = echarts.init(this.$refs.main)
       // 指定图表的配置项和数据
       var option = {
-        color: ['#71a9ed'],
         tooltip: {
           trigger: 'axis'
         },
         grid: {
-          left: '1%',
-          right: '5%',
-          top: '6%',
-          bottom: '2%',
-          containLabel: true
+          left: '16',
+          right: '16',
+          top: '6',
+          bottom: '16',
+          containLabel: false
         },
         xAxis: {
           type: 'category',
-          boundaryGap: false,
           data: this.chartData.map(item => item.time),
-          axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#ccc'
-            }
-          }
+          show: false
         },
         yAxis: {
           type: 'value',
-          axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#ccc',
-              width: 1
-            }
-          }
+          show: false
         },
         series: [
           {
-            name: '订单量',
-            type: 'line',
+            name: '订单总额',
+            type: 'bar',
             smooth: true,
             symbol: 'none',
-            areaStyle: { normal: {
-              // 折线渐变色
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0, color: '#81befd'
-              }, {
-                offset: 0.4, color: '#e4f2ff'
-              }, {
-                offset: 1, color: '#fff'
-              }]
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(
+                0, 0, 0, 1,
+                [
+                  { offset: 0, color: '#76d5fc' },
+                  { offset: 0.5, color: '#4fb6fe' },
+                  { offset: 1, color: '#389eff' }
+                ]
               )
-            }},
+            },
             data: this.chartData.map(item => item.value)
           }
         ]
@@ -136,7 +108,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .chart-box{
-    height: 280px;
-  }
+.chart-box {
+  height: 100%;
+}
 </style>

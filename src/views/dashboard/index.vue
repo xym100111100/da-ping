@@ -7,7 +7,7 @@
       </el-col>
       <!-- 顶部 end -->
       <!-- 中间 start -->
-      <el-col class="col-item" :sm="24" :md="6">
+      <el-col class="col-item" :sm="24" :md="12" :lg="6">
         <el-row>
           <el-col class="col-item" :span="24">
             <correlation />
@@ -17,28 +17,32 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col class="col-item" :sm="24" :md="18">
+      <el-col class="col-item" :sm="24" :md="12" :lg="18">
         <el-row :gutter="10">
-          <el-col class="col-item" :sm="24" :md="16">
+          <el-col class="col-item" :sm="24" :md="24" :lg="16">
             <consumptionEhcart />
           </el-col>
-          <el-col class="col-item" :sm="24" :md="8">
+          <el-col class="col-item" :sm="24" :md="24" :lg="8">
             <el-row>
-              <el-col class="col-item" :span="24">
+              <el-col class="col-item" :sm="24" :md="24" :lg="24">
                 <classificationChart />
               </el-col>
-              <el-col :span="24">
+              <el-col :sm="24" :md="24" :lg="24">
                 <shoppingChart />
               </el-col>
             </el-row>
           </el-col>
           <el-col :span="24">
-            <sellChart ref="elMap" />
+            <sellChart />
           </el-col>
         </el-row>
+
       </el-col>
       <!-- 中间 end -->
 
+      <el-col :span="24">
+        <sellRank />
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -62,6 +66,8 @@ import correlation from './modules/correlation.vue'
 // 实时订单趋势图
 import tendencyChart from './modules/tendencyChart.vue'
 
+// 销售统计表
+import sellRank from './modules/sellRank.vue'
 import elHeader from './modules/header.vue'
 export default {
   name: 'Dashboard',
@@ -72,6 +78,7 @@ export default {
     consumptionEhcart,
     correlation,
     tendencyChart,
+    sellRank,
     elHeader
   }
 

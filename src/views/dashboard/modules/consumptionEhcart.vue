@@ -14,50 +14,139 @@ export default {
   mixins: [Resize],
   data() {
     return {
-      chart: null
+      chart: null,
+      districtExplorer: null
     }
   },
-  created() {
+  async created() {
+    await this.initAmap()
     this.$nextTick(() => {
       this.initChart()
     })
   },
   methods: {
     /**
+     * @description: 查询行政边界
+     * @param {number} adcode 可参考城市编码表 https://lbs.amap.com/api/webservice/download
+     * @return {*}
+     */
+    loadAreaNode(adcode) {
+      return new Promise((resolve, reject) => {
+        this.districtExplorer.loadAreaNode(adcode, function(error, areaNode) {
+          if (error) {
+            return reject(error)
+          }
+          resolve(areaNode)
+        })
+      })
+    },
+
+    /**
+     * @description: 初始化高德实例
+     * @param {*}
+     * @return {*}
+     */
+    initAmap() {
+      return new Promise((resolve, reject) => {
+        try {
+          window.AMapUI.load(
+            ['ui/geo/DistrictExplorer'],
+            (DistrictExplorer) => {
+              // 创建一个实例
+              this.districtExplorer = (window.districtExplorer =
+                new DistrictExplorer({
+                  eventSupport: true // 打开事件支持
+                }))
+              resolve()
+            }
+          )
+        } catch (error) {
+          reject(error)
+        }
+      })
+    },
+    /**
      * @description: 初始化图表
      * @param {*}
      * @return {*}
      */
-    initChart() {
+    async initChart() {
+      // 获取区域节点对象
+      const AreaNode = await this.loadAreaNode(440000)
+      // 获取区域名称
+      const mapName = AreaNode.getName()
+
+      const geoJson = {}
+      // 获取区域节点的子集边界
+      geoJson.features = AreaNode.getSubFeatures()
+      // 设置类型为FeatureCollection
+      geoJson.type = 'FeatureCollection'
+
       this.chart = echarts.init(this.$refs.main)
+
+      // 地理信息注册，option中的mapType需要与注册的mapName值一样
+      echarts.registerMap(mapName, geoJson)
+
       // 指定图表的配置项和数据
       var option = {
-        color: ['#5bcbff', '#52d9f5', '#7ea4fd', '#63e6f0'],
-        tooltip: {},
-        legend: {
-          data: ['大米', '大豆', '食用油', '面粉']
+
+        tooltip: {
+          trigger: 'item',
+          formatter: `
+          {b}
+          <br/>
+          客户数 2315人
+          <br/>
+          交易数 452笔
+          <br/>
+          交易额 4854575元
+          <br/>
+          客户浓度 56%
+          `
         },
-        xAxis: {
-          data: ['广州市', '广州市', '广州市', '广州市', '广州2市', '广州市']
+        visualMap: {
+          show: false,
+          min: 0,
+          max: 5000,
+          splitNumber: 5,
+          color: ['#f9892c', '#aa74e6', '#8cbb2c', '#f6cc58', '#628fea']
         },
-        yAxis: {},
-        series: [{
-          name: '大米',
-          type: 'bar',
-          data: [3000, 20, 4, 235, 235, 234]
-        }, {
-          name: '大豆',
-          type: 'bar',
-          data: [5, 233, 36, 235, 235, 20]
-        }, {
-          name: '食用油',
-          type: 'bar',
-          data: [5, 20, 234, 5235, 234, 523]
-        }, {
-          name: '面粉',
-          type: 'bar',
-          data: [5, 20, 235, 12350, 6236, 234]
-        }]
+        series: [
+          {
+            name: '数据展示',
+            type: 'map',
+            mapType: mapName,
+            top: 20,
+            bottom: 20,
+            label: {
+              show: true
+            },
+            data: [
+              { name: '肇庆市', value: 0 },
+              { name: '清远市', value: 1200 },
+              { name: '韶关市', value: 2001 },
+              { name: '广州市', value: 4800 },
+              { name: '惠州市', value: 1100 },
+              { name: '河源市', value: 1120 },
+              { name: '梅州市', value: 3000 },
+              { name: '潮州市', value: 1620 },
+              { name: '云浮市', value: 1500 },
+              { name: '江门市', value: 1800 },
+              { name: '中山市', value: 1200 },
+              { name: '珠海市', value: 1000 },
+              { name: '佛山市', value: 2227 },
+              { name: '茂名市', value: 1001 },
+              { name: '湛江市', value: 10 },
+              { name: '阳江市', value: 2800 },
+              { name: '深圳市', value: 1980 },
+              { name: '揭阳市', value: 1540 },
+              { name: '汕头市', value: 1620 },
+              { name: '汕尾市', value: 0 },
+              { name: '东莞市', value: 1320 }
+            ]
+
+          }
+        ]
       }
 
       // 使用刚指定的配置项和数据显示图表。
@@ -67,7 +156,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .chart-box{
-    height: 578px;
-  }
+.chart-box {
+  height: 578px;
+}
 </style>

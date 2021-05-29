@@ -14,6 +14,7 @@ export default {
   mixins: [Resize],
   data() {
     return {
+      legendData: ['大米', '大豆', '食用油', '面粉'],
       chart: null
     }
   },
@@ -35,7 +36,7 @@ export default {
         color: ['#5bcbff', '#52d9f5', '#7ea4fd', '#63e6f0'],
         tooltip: {},
         legend: {
-          data: ['大米', '大豆', '食用油', '面粉']
+          data: this.legendData
         },
         grid: {
           left: '1%',
@@ -46,7 +47,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['广州2市', '广州市', '广州市', '广州市', '广州2市', '广州市'],
+          data: ['广州市', '汕头市', '揭阳市', '潮州市', '汕尾市', '梅州市', '梅州市', '河源市', '清远市'],
           axisLabel: {
             textStyle: {
               color: '#666'
@@ -77,19 +78,19 @@ export default {
         series: [{
           name: '大米',
           type: 'bar',
-          data: [3000, 20, 4, 235, 235, 234]
+          data: [3000, 2220, 3323, 2235, 2235, 5234, 6220, 2323, 5235]
         }, {
           name: '大豆',
           type: 'bar',
-          data: [5, 233, 36, 235, 235, 20]
+          data: [3533, 2433, 4242, 4235, 4235, 2230, 2220, 7323, 3235]
         }, {
           name: '食用油',
           type: 'bar',
-          data: [5, 20, 234, 5235, 234, 523]
+          data: [5444, 4220, 2234, 5235, 5234, 2523, 4220, 2323, 5235]
         }, {
           name: '面粉',
           type: 'bar',
-          data: [5, 20, 235, 12350, 6236, 234]
+          data: [5234, 5220, 4235, 12350, 6236, 2234, 6220, 5323, 8335]
         }]
       }
 
@@ -100,7 +101,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .chart-box{
-    height: 320px;
-  }
+.chart-box {
+  height: 320px;
+}
 </style>

@@ -1,13 +1,8 @@
 <template>
-  <el-card class="box-card">
-    <div slot="header" class="card-title">
-      <span>实时订单趋势图</span>
-    </div>
-    <div ref="main" class="chart-box" />
-  </el-card>
+  <div ref="main" class="chart-box" />
 </template>
 <script>
-import Resize from './mixin/resize.js'
+import Resize from '../mixin/resize.js'
 import echarts from '@/components/useEcharts.js'
 export default {
   name: 'ElMap',
@@ -17,7 +12,7 @@ export default {
       chartData: [
         {
           time: '08:00',
-          value: 100
+          value: 120
         },
         {
           time: '09:00',
@@ -25,27 +20,27 @@ export default {
         },
         {
           time: '10:00',
-          value: 132
+          value: 100
         },
         {
           time: '11:00',
-          value: 170
+          value: 150
         },
         {
           time: '12:00',
-          value: 210
+          value: 80
         },
         {
           time: '13:00',
-          value: 140
+          value: 160
         },
         {
           time: '14:00',
-          value: 180
+          value: 120
         },
         {
           time: '15:00',
-          value: 130
+          value: 150
         }
       ],
       chart: null
@@ -66,64 +61,32 @@ export default {
       this.chart = echarts.init(this.$refs.main)
       // 指定图表的配置项和数据
       var option = {
-        color: ['#71a9ed'],
+        color: ['#0fa4e9'],
         tooltip: {
           trigger: 'axis'
         },
         grid: {
-          left: '1%',
-          right: '5%',
-          top: '6%',
+          left: '6',
+          right: '0',
+          top: '6',
           bottom: '2%',
-          containLabel: true
+          containLabel: false
         },
         xAxis: {
           type: 'category',
-          boundaryGap: false,
           data: this.chartData.map(item => item.time),
-          axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#ccc'
-            }
-          }
+          show: false
         },
         yAxis: {
           type: 'value',
-          axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#ccc',
-              width: 1
-            }
-          }
+          show: false
         },
         series: [
           {
-            name: '订单量',
+            name: '订单数据（笔）',
             type: 'line',
             smooth: true,
             symbol: 'none',
-            areaStyle: { normal: {
-              // 折线渐变色
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0, color: '#81befd'
-              }, {
-                offset: 0.4, color: '#e4f2ff'
-              }, {
-                offset: 1, color: '#fff'
-              }]
-              )
-            }},
             data: this.chartData.map(item => item.value)
           }
         ]
@@ -136,7 +99,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .chart-box{
-    height: 280px;
-  }
+.chart-box {
+  height: 100%;
+}
 </style>

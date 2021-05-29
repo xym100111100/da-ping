@@ -28,7 +28,12 @@ export default {
       this.chart.resize()
     }
   },
+  // 组件挂载后开始监听窗口变化
   mounted() {
     window.addEventListener('resize', this.resize)
+  },
+  // 组件销毁前移除监听
+  deactivated() {
+    window.removeEventListener('resize', this.resize)
   }
 }
