@@ -33,12 +33,16 @@
             </el-row>
           </el-col>
           <el-col :span="24">
-            <sellChart ref="elMap" />
+            <sellChart />
           </el-col>
         </el-row>
+
       </el-col>
       <!-- 中间 end -->
 
+      <el-col :span="24">
+        <sellRank />
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -62,6 +66,8 @@ import correlation from './modules/correlation.vue'
 // 实时订单趋势图
 import tendencyChart from './modules/tendencyChart.vue'
 
+// 销售统计表
+import sellRank from './modules/sellRank.vue'
 import elHeader from './modules/header.vue'
 export default {
   name: 'Dashboard',
@@ -72,6 +78,7 @@ export default {
     consumptionEhcart,
     correlation,
     tendencyChart,
+    sellRank,
     elHeader
   }
 

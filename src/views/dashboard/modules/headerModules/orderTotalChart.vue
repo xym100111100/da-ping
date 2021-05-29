@@ -65,10 +65,10 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '12',
-          right: '12',
+          left: '16',
+          right: '16',
           top: '6',
-          bottom: '12',
+          bottom: '16',
           containLabel: false
         },
         xAxis: {
