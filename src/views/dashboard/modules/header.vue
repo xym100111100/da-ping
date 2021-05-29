@@ -79,7 +79,6 @@ export default {
 <style lang="scss" scoped>
 .header-box {
   border-radius: 5px;
-  background: #ffffff;
   display: flex;
   position: relative;
   overflow: hidden;
@@ -95,8 +94,8 @@ export default {
   }
 
   > .item-box {
+    background: #ffffff;
     width: calc(100% / 5);
-    flex: 1;
     padding: 24px 0 0;
     height: 190px;
     text-align: center;
@@ -142,5 +141,27 @@ export default {
       background: #eaeaea;
     }
   }
+}
+
+@media screen and (max-width: 800px) {
+  .header-box {
+    flex-wrap: wrap;
+    &::before {
+    content: normal;
+    }
+    > .item-box {
+      background: #ffffff;
+      width: calc(100% / 2);
+      flex: auto;
+      padding: 24px 0 0;
+      height: 190px;
+      text-align: center;
+
+    }
+      > div:first-child + div ~ div {
+        margin-top: 10px;
+      }
+    }
+
 }
 </style>

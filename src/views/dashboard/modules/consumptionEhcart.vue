@@ -162,4 +162,10 @@ export default {
 .chart-box {
   height: 578px;
 }
+
+@media screen and (max-width:992px) {
+    .chart-box{
+    height: 342px;
+  }
+}
 </style>

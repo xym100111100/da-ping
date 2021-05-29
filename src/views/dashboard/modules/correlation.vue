@@ -101,7 +101,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .chart-box {
-  height: 620px;
+  height: 640px;
 
   .item-box {
     margin-left: 2px;

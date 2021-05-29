@@ -139,4 +139,5 @@ export default {
   .chart-box{
     height: 280px;
   }
+
 </style>
