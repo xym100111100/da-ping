@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      orderSize: 120055,
+      orderSize: 12055,
       config: {
         headerBGC: '#f0faff',
         oddRowBGC: '#ffffff',

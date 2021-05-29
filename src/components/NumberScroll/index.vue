@@ -53,15 +53,11 @@ export default {
 .list-box {
   display: inline-block;
   overflow: hidden;
-  height: 32px;
-  line-height: 32px;
   position: relative;
   z-index: 1;
   margin: 0 3px;
 }
 .number-item {
-  height: 32px;
-  line-height: 32px;
   width: 24px;
   text-align: center;
   display: inline-block;
