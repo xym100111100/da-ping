@@ -158,6 +158,9 @@ export default {
   font-size: 14px;
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  margin-top: 8px;
+  margin-bottom: 2px;
 }
 
 .scroll-table-box {

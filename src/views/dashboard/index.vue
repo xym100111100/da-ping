@@ -7,7 +7,7 @@
       </el-col>
       <!-- 顶部 end -->
       <!-- 中间 start -->
-      <el-col class="col-item" :sm="24" :md="6">
+      <el-col class="col-item" :sm="24" :md="12" :lg="6">
         <el-row>
           <el-col class="col-item" :span="24">
             <correlation />
@@ -17,17 +17,17 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col class="col-item" :sm="24" :md="18">
+      <el-col class="col-item" :sm="24" :md="12" :lg="18">
         <el-row :gutter="10">
-          <el-col class="col-item" :sm="24" :md="16">
+          <el-col class="col-item" :sm="24" :md="24" :lg="16">
             <consumptionEhcart />
           </el-col>
-          <el-col class="col-item" :sm="24" :md="8">
+          <el-col class="col-item" :sm="24" :md="24" :lg="8">
             <el-row>
-              <el-col class="col-item" :span="24">
+              <el-col class="col-item" :sm="24" :md="24" :lg="24">
                 <classificationChart />
               </el-col>
-              <el-col :span="24">
+              <el-col :sm="24" :md="24" :lg="24">
                 <shoppingChart />
               </el-col>
             </el-row>

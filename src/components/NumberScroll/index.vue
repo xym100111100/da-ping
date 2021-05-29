@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="number-scroll-box">
     <transition-group class="list-box" name="list" tag="span">
       <span v-for="(item,index) in String(value)" :key="item + index" class="number-item">
         <span class="number-box">
@@ -16,6 +16,7 @@
 <script>
 
 export default {
+  name: 'NumberScroll',
   props: {
     value: {
       type: Number,
@@ -45,6 +46,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.number-scroll-box {
+  height: 32px;
+  line-height: 32px;
+}
 .list-box {
   display: inline-block;
   overflow: hidden;
@@ -94,7 +99,6 @@ export default {
 // 过渡动画
 .list-item {
   display: inline-block;
-  margin-right: 10px;
 }
 .list-enter-active,
 .list-leave-active {
