@@ -94,7 +94,7 @@ export default {
   mounted() {
     setInterval(() => {
       this.orderSize += 56
-    }, 2000)
+    }, 3000)
   }
 
 }

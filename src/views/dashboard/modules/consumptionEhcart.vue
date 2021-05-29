@@ -109,6 +109,9 @@ export default {
           min: 0,
           max: 5000,
           splitNumber: 5,
+          // realtime: false,
+          // calculable: true,
+          // color: ['#8cbb2c', 'yellow', 'orangered']
           color: ['#f9892c', '#aa74e6', '#8cbb2c', '#f6cc58', '#628fea']
         },
         series: [

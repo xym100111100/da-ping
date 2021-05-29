@@ -95,6 +95,7 @@ export default {
   }
 
   > .item-box {
+    width: calc(100% / 5);
     flex: 1;
     padding: 24px 0 0;
     height: 190px;
@@ -124,6 +125,7 @@ export default {
     }
 
     .item-chart {
+      width: 100%;
       height: 110px;
     }
   }
