@@ -14,6 +14,40 @@ export default {
   mixins: [Resize],
   data() {
     return {
+      chartData: [
+        {
+          time: '08:00',
+          value: 100
+        },
+        {
+          time: '09:00',
+          value: 140
+        },
+        {
+          time: '10:00',
+          value: 132
+        },
+        {
+          time: '11:00',
+          value: 170
+        },
+        {
+          time: '12:00',
+          value: 210
+        },
+        {
+          time: '13:00',
+          value: 140
+        },
+        {
+          time: '14:00',
+          value: 180
+        },
+        {
+          time: '15:00',
+          value: 130
+        }
+      ],
       chart: null
     }
   },
@@ -45,10 +79,32 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
+          data: this.chartData.map(item => item.time),
+          axisLabel: {
+            textStyle: {
+              color: '#666'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#ccc'
+            }
+          }
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            textStyle: {
+              color: '#666'
+            }
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: '#ccc',
+              width: 1
+            }
+          }
         },
         series: [
           {
@@ -67,7 +123,7 @@ export default {
               }]
               )
             }},
-            data: [100, 140, 132, 170, 210, 140, 180, 130]
+            data: this.chartData.map(item => item.value)
           }
         ]
       }

@@ -1,12 +1,17 @@
 <template>
-  <transition-group class="list-box" name="list" tag="span">
-    <span v-for="(item,index) in String(value)" :key="item + index" class="number-item">
-      <span class="number-box">
-        {{ item }}
-      </span>
+  <span>
+    <transition-group class="list-box" name="list" tag="span">
+      <span v-for="(item,index) in String(value)" :key="item + index" class="number-item">
+        <span class="number-box">
+          {{ item }}
+        </span>
 
-    </span>
-  </transition-group>
+      </span>
+    </transition-group>
+    <transition enter-active-class="animate__bounceInUp">
+      <img v-show="showImg" class="up-img" src="../../assets/images/up.png" alt="">
+    </transition>
+  </span>
 </template>
 <script>
 
@@ -16,6 +21,25 @@ export default {
       type: Number,
       default: 0
     }
+  },
+  data() {
+    return {
+      showImg: false
+    }
+  },
+  watch: {
+    /**
+     * @description: 监听数值是否改变，改变则刷新图标状态
+     * @param {*}
+     * @return {*}
+     */
+    value() {
+      this.showImg = false
+      setTimeout(() => {
+        this.showImg = true
+      }, 1)
+    }
+
   }
 
 }
@@ -25,9 +49,10 @@ export default {
   display: inline-block;
   overflow: hidden;
   height: 32px;
+  line-height: 32px;
   position: relative;
   z-index: 1;
-
+  margin: 0 3px;
 }
 .number-item {
   height: 32px;
@@ -73,12 +98,12 @@ export default {
 }
 .list-enter-active,
 .list-leave-active {
-  transition: all .8s;
+  transition: all 0.8s;
 }
 
 .list-leave-active {
   position: absolute;
-  transition: all .8s;
+  transition: all 0.8s;
   z-index: -1;
 }
 
@@ -88,5 +113,23 @@ export default {
 
 .list-leave-to {
   transform: translateY(-100%);
+}
+
+.up-img {
+  transform: translateY(-40%);
+}
+@keyframes bounceInUp {
+  from {
+    transform: translate3d(0, 60%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, -40%, 0);
+  }
+}
+.animate__bounceInUp {
+  animation: 0.8s;
+  animation-name: bounceInUp;
 }
 </style>
