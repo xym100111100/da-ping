@@ -55,6 +55,7 @@ export default {
             name: '订单量',
             type: 'line',
             smooth: true,
+            symbol: 'none',
             areaStyle: { normal: {
               // 折线渐变色
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
