@@ -164,7 +164,7 @@ export default {
 }
 
 .scroll-table-box {
-  border: 1px solid #efefef;
+  border: 1px solid #ebeef5;
   height: 180px;
 }
 </style>

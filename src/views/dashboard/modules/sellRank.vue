@@ -112,6 +112,8 @@ export default {
 </style>
 <style lang="scss">
 .sell-rank-box {
+
+  .el-table .el-table__header-wrapper,
   .el-table th,
   .el-table tr.sell-rank-header {
     background: #f0faff;
@@ -120,6 +122,7 @@ export default {
 
   .el-table {
     border: 1px solid #ebeef5;
+    border-bottom: 0;
     .rank-box {
       background: #e4e4e4;
       text-align: center;

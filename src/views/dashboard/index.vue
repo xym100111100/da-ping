@@ -39,7 +39,6 @@
       <el-col class="col-item" :sm="24" :md="24" :lg="18">
         <sellChart />
       </el-col>
-
       <!-- 中间 end -->
 
       <el-col :span="24">
@@ -70,6 +69,8 @@ import tendencyChart from './modules/tendencyChart.vue'
 
 // 销售统计表
 import sellRank from './modules/sellRank.vue'
+
+// 顶部header
 import elHeader from './modules/header.vue'
 export default {
   name: 'Dashboard',
