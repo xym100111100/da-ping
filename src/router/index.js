@@ -56,6 +56,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/inventory',
+    component: Layout,
+    redirect: '/inventory/analysis-chart',
+    name: 'inventory',
+    meta: { title: '库存监管系统', icon: 'el-icon-s-help' },
+    children: [{
+      path: 'analysis-chart',
+      name: 'analysisChart',
+      component: () => import('@/views/analysis-chart/index'),
+      meta: { title: '站点库存分析一张图', icon: 'el-icon-s-marketing' }
+    }]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',

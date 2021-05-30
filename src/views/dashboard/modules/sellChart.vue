@@ -2,6 +2,14 @@
   <el-card class="box-card">
     <div slot="header" class="card-title">
       <span>销售统计</span>
+      <span>
+        <el-radio-group v-model="date" size="small" @change="clearRangeDate">
+          <el-radio-button label="本周">本周</el-radio-button>
+          <el-radio-button label="本月">本月</el-radio-button>
+          <el-radio-button label="本年">本年</el-radio-button>
+        </el-radio-group>
+        <el-date-picker v-model="rangeDate" class="range-date" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" size="small" @change="clearDate" />
+      </span>
     </div>
     <div ref="main" class="chart-box" />
   </el-card>
@@ -14,6 +22,8 @@ export default {
   mixins: [Resize],
   data() {
     return {
+      date: '本周',
+      rangeDate: null,
       legendData: ['大米', '大豆', '食用油', '面粉'],
       chart: null
     }
@@ -24,6 +34,20 @@ export default {
     })
   },
   methods: {
+    /**
+     * @description: 清除时间范围值
+     */
+    clearRangeDate() {
+      this.rangeDate = null
+    },
+
+    /**
+     * @description: 清除时间值
+     */
+    clearDate() {
+      this.date = null
+    },
+
     /**
      * @description: 初始化图表
      * @param {*}
@@ -103,5 +127,22 @@ export default {
 <style lang="scss" scoped>
 .chart-box {
   height: 340px;
+}
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 18px;
+  .range-date {
+    margin-left: 8px;
+    transform: translateY(1px);
+  }
+}
+
+// 屏幕小于800px时隐藏时间范围选择
+@media screen and (max-width: 800px) {
+  .range-date {
+    display: none;
+  }
 }
 </style>

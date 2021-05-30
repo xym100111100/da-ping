@@ -147,7 +147,7 @@ export default {
   .header-box {
     flex-wrap: wrap;
     &::before {
-    content: normal;
+      content: normal;
     }
     > .item-box {
       background: #ffffff;
@@ -156,12 +156,16 @@ export default {
       padding: 24px 0 0;
       height: 190px;
       text-align: center;
-
     }
-      > div:first-child + div ~ div {
-        margin-top: 10px;
+    > div:first-child + div ~ div {
+      margin-top: 10px;
+    }
+
+    >.item-box:nth-child(odd) {
+      &::before {
+        content: normal;
       }
     }
-
+  }
 }
 </style>

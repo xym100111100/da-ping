@@ -2,6 +2,11 @@
   <el-card class="box-card">
     <div slot="header" class="card-title">
       <span>广州市消费人群各项指标汇总</span>
+      <el-radio-group v-model="date" class="redio-date" size="small">
+        <el-radio-button label="全部">全部</el-radio-button>
+        <el-radio-button label="本年">本年</el-radio-button>
+        <el-radio-button label="本月">本月</el-radio-button>
+      </el-radio-group>
     </div>
     <div ref="main" class="chart-box" />
   </el-card>
@@ -14,6 +19,7 @@ export default {
   mixins: [Resize],
   data() {
     return {
+      date: '全部',
       chart: null,
       districtExplorer: null
     }
@@ -160,12 +166,26 @@ export default {
 </script>
 <style lang="scss" scoped>
 .chart-box {
-  height: 578px;
+  height: 582px;
 }
 
-@media screen and (max-width:992px) {
-    .chart-box{
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 18px;
+}
+
+// 屏幕小于992px时，调整盒子高度，以正常的比例展示
+@media screen and (max-width: 992px) {
+  .chart-box {
     height: 342px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .redio-date {
+    display: none;
   }
 }
 </style>
