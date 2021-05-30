@@ -3,7 +3,7 @@
     <div slot="header" class="card-title">
       <span>分类销售占比</span>
     </div>
-    <div ref="main" class="chart-box" />
+    <div ref="main" class="chart-box" @mouseover="clearAction" @mouseout="dispatchActionChart" />
   </el-card>
 </template>
 <script>
@@ -14,6 +14,8 @@ export default {
   mixins: [Resize],
   data() {
     return {
+      timeInterval: null,
+      chartIndex: 0,
       chart: null
     }
   },
@@ -22,6 +24,11 @@ export default {
       this.initChart()
     })
   },
+  // 组件销毁前移除切换动画
+  deactivated() {
+    this.clearAction()
+  },
+
   methods: {
     /**
      * @description: 初始化图表
@@ -33,9 +40,6 @@ export default {
       // 指定图表的配置项和数据
       var option = {
         color: ['#f9798c', '#739ffa', '#38d1d3', '#fbc542', '#52c1f5'],
-        tooltip: {
-          trigger: 'item'
-        },
         legend: {
           top: 'center',
           right: 'right',
@@ -49,14 +53,26 @@ export default {
         },
         series: [
           {
-            name: '访问来源',
+            name: '分类销售占比',
             type: 'pie',
             right: '60',
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
-              position: 'center'
+              formatter: function(e) {
+                console.log()
+                return `{a|${e.percent}%}\n\r\n\r${e.data.name}`
+              },
+              position: 'center',
+              rich: {
+                a: {
+                  color: 'red',
+                  lineHeight: 10,
+                  fontSize: 18
+                }
+
+              }
             },
             emphasis: {
               label: {
@@ -80,7 +96,43 @@ export default {
 
       // 使用刚指定的配置项和数据显示图表。
       this.chart.setOption(option)
+      this.dispatchActionChart(0)
+    },
+    /**
+   * @description: 自动切换echart高亮区块
+   * @param {*}
+   * @return {*}
+   */
+    dispatchActionChart() {
+      this.timeInterval = setInterval(() => {
+        this.chart.dispatchAction({
+          type: 'downplay',
+          seriesIndex: 0,
+          dataIndex: this.chartIndex
+        })
+
+        ++this.chartIndex > 4 && (this.chartIndex = 0)
+        this.chart.dispatchAction({
+          type: 'highlight',
+          seriesIndex: 0,
+          dataIndex: this.chartIndex
+        })
+      }, 2000)
+    },
+    /**
+     * @description: 移除自动切换
+     * @param {*}
+     * @return {*}
+     */
+    clearAction() {
+      window.clearInterval(this.timeInterval)
+      this.chart.dispatchAction({
+        type: 'downplay',
+        seriesIndex: 0,
+        dataIndex: this.chartIndex
+      })
     }
+
   }
 }
 </script>

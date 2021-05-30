@@ -18,91 +18,91 @@ export default {
         {
           name: '广州市',
           total: 720,
-          outCount: 163,
+          outCount: 100,
           inCount: 190
         },
         {
           name: '深圳市',
           total: 560,
-          outCount: 143,
+          outCount: 145,
           inCount: 240
         },
         {
           name: '韶关市',
           total: 680,
-          outCount: 84,
+          outCount: 152,
           inCount: 323
         },
         {
           name: '湛江市',
           total: 630,
-          outCount: 355,
+          outCount: 213,
           inCount: 422
         },
         {
           name: '惠州市',
           total: 560,
-          outCount: 65,
+          outCount: 99,
           inCount: 223
         },
         {
           name: '汕头市',
-          total: 520,
-          outCount: 323,
-          inCount: 380
+          total: 700,
+          outCount: 186,
+          inCount: 340
         },
         {
           name: '汕尾市',
-          total: 589,
-          outCount: 253,
+          total: 660,
+          outCount: 160,
           inCount: 321
         },
         {
           name: '揭阳市',
-          total: 826,
-          outCount: 163,
-          inCount: 221
+          total: 756,
+          outCount: 150,
+          inCount: 350
         },
         {
           name: '河源市',
           total: 620,
-          outCount: 190,
+          outCount: 100,
           inCount: 249
         },
         {
           name: '肇庆市',
           total: 680,
-          outCount: 80,
+          outCount: 180,
           inCount: 402
         },
         {
           name: '茂名市',
-          total: 552,
-          outCount: 212,
+          total: 720,
+          outCount: 198,
           inCount: 386
         },
         {
           name: '阳江市',
-          total: 587,
-          outCount: 289,
+          total: 630,
+          outCount: 180,
           inCount: 356
         },
         {
           name: '中山市',
-          total: 512,
-          outCount: 248,
+          total: 620,
+          outCount: 150,
           inCount: 310
         },
         {
           name: '佛山市',
-          total: 680,
-          outCount: 189,
+          total: 520,
+          outCount: 56,
           inCount: 215
         },
         {
           name: '珠海市',
-          total: 586,
-          outCount: 300,
+          total: 730,
+          outCount: 160,
           inCount: 415
         }
       ],
@@ -131,9 +131,13 @@ export default {
         grid: {
           left: '1%',
           right: '2%',
-          top: '6%',
+          top: '16%',
           bottom: '2%',
           containLabel: true
+        },
+        legend: {
+          data: ['库存总量', '入库量', '出库量'],
+          left: 'left'
         },
         xAxis: {
           type: 'category',

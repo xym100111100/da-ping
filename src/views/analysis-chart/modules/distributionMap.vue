@@ -35,10 +35,22 @@ export default {
       districtExplorer: null
     }
   },
+  watch: {
+    $route: {
+      handler(e) {
+        console.log(e)
+        if (e.analysisChart) {
+          this.initChart(440100)
+          this.chart.resize()
+        }
+      },
+      deep: true
+    }
+  },
   async created() {
     await this.initAmap()
     this.$nextTick(() => {
-      this.initChart()
+      this.initChart(440000)
     })
   },
   methods: {
@@ -84,12 +96,12 @@ export default {
     },
     /**
      * @description: 初始化图表
-     * @param {*}
+     * @param {number} adcode 可参考城市编码表 https://lbs.amap.com/api/webservice/download
      * @return {*}
      */
-    async initChart() {
-      // 获取区域节点对象
-      const AreaNode = await this.loadAreaNode(440000)
+    async initChart(adcode) {
+      // 获取区域节点对象440000
+      const AreaNode = await this.loadAreaNode(adcode)
       // 获取区域名称
       const mapName = AreaNode.getName()
 
