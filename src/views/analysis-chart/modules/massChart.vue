@@ -178,7 +178,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .chart-box {
-  height: 340px;
+  height: 320px;
 }
 .card-title {
   display: flex;

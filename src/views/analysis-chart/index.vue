@@ -18,15 +18,15 @@
         <trendChart />
       </el-col>
       <el-col class="col-item" :span="24">
-        <sellChart />
+        <massChart />
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-// 销售统计表
-import sellChart from './modules/sellChart.vue'
+// 质量检验汇总图
+import massChart from './modules/massChart.vue'
 
 // 运力情况
 import transportChart from './modules/transportChart.vue'
@@ -45,7 +45,7 @@ import trendChart from './modules/trendChart.vue'
 export default {
   name: 'Dashboard',
   components: {
-    sellChart,
+    massChart,
     transportChart,
     classificationChart,
     distributionMap,

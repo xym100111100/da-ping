@@ -13,39 +13,57 @@ export default {
     return {
       filterText: null,
       data: [{
-        label: '一级 1',
+        label: '广东省',
+        cityCode: 440000,
         children: [{
-          label: '二级 1-1',
+          label: '广州市',
+          cityCode: 440100,
           children: [{
-            label: '三级 1-1-1'
-          }]
-        }]
-      }, {
-        label: '一级 2',
-        children: [{
-          label: '二级 2-1',
-          children: [{
-            label: '三级 2-1-1'
+            label: 'xxx军供站'
           }]
         }, {
-          label: '二级 2-2',
+          label: '佛山市',
+          cityCode: 440600,
           children: [{
-            label: '三级 2-2-1'
+            label: 'xxx军供站'
+          }]
+        },
+        {
+          label: '中山市',
+          cityCode: 440400,
+          children: [{
+            label: 'xxx军供站'
+          }]
+        },
+        {
+          label: '深圳市',
+          cityCode: 440300,
+          children: [{
+            label: 'xxx军供站'
+          }]
+        },
+        {
+          label: '湛江市',
+          cityCode: 440800,
+          children: [{
+            label: 'xxx军供站'
+          }]
+        },
+        {
+          label: '东莞市',
+          cityCode: 440900,
+          children: [{
+            label: 'xxx军供站'
+          }]
+        },
+        {
+          label: '惠州市',
+          cityCode: 441300,
+          children: [{
+            label: 'xxx军供站'
           }]
         }]
-      }, {
-        label: '一级 3',
-        children: [{
-          label: '二级 3-1',
-          children: [{
-            label: '三级 3-1-1'
-          }]
-        }, {
-          label: '二级 3-2',
-          children: [{
-            label: '三级 3-2-1'
-          }]
-        }]
+
       }],
       defaultProps: {
         children: 'children',
@@ -64,7 +82,7 @@ export default {
       return data.label.indexOf(value) !== -1
     },
     handleNodeClick(data) {
-      console.log(data)
+      this.$emit('select', data)
     }
   }
 }

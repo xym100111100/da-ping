@@ -3,16 +3,16 @@
     <div slot="header" class="card-title">
       <span>广东省成品粮库分布情况</span>
       <div>
-        1212
+        <el-icon class="el-icon-full-screen" />
       </div>
     </div>
     <div class="container">
       <div class="tree-query-box">
-        <TreeQuery />
+        <TreeQuery @select="selectTree" />
       </div>
       <div class="chart-box">
 
-        <div ref="main" />
+        <div v-show="level !== 3" ref="main" />
       </div>
     </div>
 
@@ -23,7 +23,7 @@ import Resize from './mixin/resize.js'
 import echarts from '@/components/useEcharts.js'
 import TreeQuery from '@/components/TreeQuery/index.vue'
 export default {
-  name: 'ElMap',
+  name: 'DistributionMap',
   components: {
     TreeQuery
   },
@@ -35,25 +35,55 @@ export default {
       districtExplorer: null
     }
   },
-  watch: {
-    $route: {
-      handler(e) {
-        console.log(e)
-        if (e.analysisChart) {
-          this.initChart(440100)
-          this.chart.resize()
-        }
-      },
-      deep: true
+  computed: {
+    level() {
+      return this.$route.query.level || 1
     }
   },
   async created() {
     await this.initAmap()
     this.$nextTick(() => {
-      this.initChart(440000)
+      this.chart = echarts.init(this.$refs.main)
+      this.setChartOption(440000)
+      this.chart.on('click', this.echartsMapClick)
     })
   },
   methods: {
+    /**
+     * @description: 切换路由
+     * @param {*}
+     * @return {*}
+     */
+    to(level, cityCode) {
+      this.$router.push({
+        path: '/inventory/analysis-chart',
+        query: {
+          level,
+          cityCode
+        }
+      })
+    },
+    selectTree(data) {
+      if (data.cityCode) {
+        this.echartsMapClick(data.cityCode)
+        return
+      }
+      this.to(3)
+    },
+    /**
+     * @description: 地图切换
+     * @param {*} params
+     * @return {*}
+     */
+    echartsMapClick(params) {
+      if (typeof params === 'number') {
+        this.setChartOption(params)
+      }
+      if (params.data && params.data.cityCode) {
+        this.setChartOption(params.data.cityCode)
+      }
+    },
+
     /**
      * @description: 查询行政边界
      * @param {number} adcode 可参考城市编码表 https://lbs.amap.com/api/webservice/download
@@ -95,11 +125,13 @@ export default {
       })
     },
     /**
-     * @description: 初始化图表
+     * @description: 配置图表option
      * @param {number} adcode 可参考城市编码表 https://lbs.amap.com/api/webservice/download
      * @return {*}
      */
-    async initChart(adcode) {
+    async setChartOption(adcode) {
+      this.to(2, adcode)
+
       // 获取区域节点对象440000
       const AreaNode = await this.loadAreaNode(adcode)
       // 获取区域名称
@@ -110,8 +142,6 @@ export default {
       geoJson.features = AreaNode.getSubFeatures()
       // 设置类型为FeatureCollection
       geoJson.type = 'FeatureCollection'
-
-      this.chart = echarts.init(this.$refs.main)
 
       // 地理信息注册，option中的mapType需要与注册的mapName值一样
       echarts.registerMap(mapName, geoJson)
@@ -148,33 +178,31 @@ export default {
             name: '数据展示',
             type: 'map',
             mapType: mapName,
-            top: 20,
-            bottom: 20,
             label: {
               show: true
             },
             data: [
-              { name: '肇庆市', value: 0 },
-              { name: '清远市', value: 1200 },
-              { name: '韶关市', value: 2001 },
-              { name: '广州市', value: 4800 },
-              { name: '惠州市', value: 1100 },
-              { name: '河源市', value: 1120 },
-              { name: '梅州市', value: 3000 },
-              { name: '潮州市', value: 1620 },
-              { name: '云浮市', value: 1500 },
-              { name: '江门市', value: 1800 },
-              { name: '中山市', value: 1200 },
-              { name: '珠海市', value: 1000 },
-              { name: '佛山市', value: 2227 },
-              { name: '茂名市', value: 1001 },
-              { name: '湛江市', value: 10 },
-              { name: '阳江市', value: 2800 },
-              { name: '深圳市', value: 1980 },
-              { name: '揭阳市', value: 1540 },
-              { name: '汕头市', value: 1620 },
-              { name: '汕尾市', value: 0 },
-              { name: '东莞市', value: 1320 }
+              { name: '肇庆市', cityCode: 440100, value: 0 },
+              { name: '清远市', cityCode: 440100, value: 1200 },
+              { name: '韶关市', cityCode: 440100, value: 2001 },
+              { name: '广州市', cityCode: 440100, value: 4800 },
+              { name: '惠州市', cityCode: 440100, value: 1100 },
+              { name: '河源市', cityCode: 440100, value: 1120 },
+              { name: '梅州市', cityCode: 440100, value: 3000 },
+              { name: '潮州市', cityCode: 440100, value: 1620 },
+              { name: '云浮市', cityCode: 440100, value: 1500 },
+              { name: '江门市', cityCode: 440100, value: 1800 },
+              { name: '中山市', cityCode: 440100, value: 1200 },
+              { name: '珠海市', cityCode: 440100, value: 1000 },
+              { name: '佛山市', cityCode: 440100, value: 2227 },
+              { name: '茂名市', cityCode: 440100, value: 1001 },
+              { name: '湛江市', cityCode: 440100, value: 10 },
+              { name: '阳江市', cityCode: 440100, value: 2800 },
+              { name: '深圳市', cityCode: 440100, value: 1980 },
+              { name: '揭阳市', cityCode: 440100, value: 1540 },
+              { name: '汕头市', cityCode: 440100, value: 1620 },
+              { name: '汕尾市', cityCode: 440100, value: 0 },
+              { name: '东莞市', cityCode: 440100, value: 1320 }
             ]
 
           }
@@ -183,13 +211,14 @@ export default {
 
       // 使用刚指定的配置项和数据显示图表。
       this.chart.setOption(option)
+      this.chart.resize()
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .container {
-  height: 663px;
+  height: 656px;
   display: flex;
   .tree-query-box {
     width: 220px;
