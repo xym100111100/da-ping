@@ -120,10 +120,11 @@ export default {
         color: ['#32c5ff', '#facc4d'],
         tooltip: {
           trigger: 'item',
-          formatter: ({ name }) => {
+          formatter: (params) => {
             let data = 0
+            console.log(params)
             this.chartData.forEach(item => {
-              if (item.name === name) {
+              if (item.name === params.name) {
                 data = item
               }
             })
@@ -133,13 +134,13 @@ export default {
             return `
           <div style="padding:2px 6px">
             <div style="font-weight:700;padding-bottom:6px;color:#333333;font-size:15px;">
-              ${name}
+              ${params.name}
             </div>
             <div style="padding-bottom:2px;">
-              · 达标<span style="color:#323232;margin-left:6px;">${data.qualifiedCount}</span>
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#32c5ff;"></span> 达标<span style="color:#323232;margin-left:6px;">${data.qualifiedCount}</span>
             </div>
             <div style="padding-bottom:2px;">
-              · 不达标<span style="color:#323232;margin-left:6px;">${data.disqualifiedCount}</span>
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#facc4d;"></span> 不达标<span style="color:#323232;margin-left:6px;">${data.disqualifiedCount}</span>
             </div>  
           </div>
           `

@@ -98,16 +98,16 @@ export default {
               ${name}
             </div>
             <div style="padding-bottom:2px;">
-              · 大米<span style="color:#323232;margin-left:6px;">${data.rice}吨</span>
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#5bcbff;"></span> 大米<span style="color:#323232;margin-left:6px;">${data.rice}吨</span>
             </div>
             <div style="padding-bottom:2px;">
-              · 大豆<span style="color:#323232;margin-left:6px;">${data.soya}吨</span>
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#46ebbf;"></span> 大豆<span style="color:#323232;margin-left:6px;">${data.soya}吨</span>
             </div>
             <div style="padding-bottom:2px;">
-              · 食用油<span style="color:#323232;margin-left:6px;">${data.edibleOil}元</span>
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#7ea4fd;"></span> 食用油<span style="color:#323232;margin-left:6px;">${data.edibleOil}元</span>
             </div>
             <div style="padding-bottom:2px;">
-              · 面粉<span style="color:#323232;margin-left:6px;">${data.flour}吨</span>
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#63e6f0;"></span> 面粉<span style="color:#323232;margin-left:6px;">${data.flour}吨</span>
             </div>  
           </div>
           `
