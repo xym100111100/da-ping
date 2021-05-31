@@ -30,6 +30,30 @@ export default {
   mixins: [Resize],
   data() {
     return {
+      chartData: [
+        { name: '肇庆市', value: 0, volume: 63, sum: 452, rate: 51 },
+        { name: '清远市', value: 1200, volume: 51, sum: 215, rate: 76 },
+        { name: '韶关市', value: 2001, volume: 12121, sum: 12521, rate: 21 },
+        { name: '广州市', value: 4800, volume: 234, sum: 123123, rate: 12 },
+        { name: '惠州市', value: 1100, volume: 12121, sum: 421, rate: 44 },
+        { name: '河源市', value: 1120, volume: 235, sum: 51251, rate: 22 },
+        { name: '梅州市', value: 3000, volume: 12121, sum: 1251, rate: 33 },
+        { name: '潮州市', value: 1620, volume: 1245, sum: 123, rate: 11 },
+        { name: '云浮市', value: 1500, volume: 12121, sum: 5124, rate: 62 },
+        { name: '江门市', value: 1800, volume: 5213, sum: 123, rate: 53 },
+        { name: '中山市', value: 1200, volume: 12121, sum: 45213, rate: 24 },
+        { name: '珠海市', value: 1000, volume: 123, sum: 123, rate: 52 },
+        { name: '佛山市', value: 2227, volume: 513, sum: 1245, rate: 23 },
+        { name: '茂名市', value: 1001, volume: 562, sum: 124, rate: 52 },
+        { name: '湛江市', value: 10, volume: 1233, sum: 5123, rate: 63 },
+        { name: '阳江市', value: 2800, volume: 56232, sum: 523, rate: 23 },
+        { name: '深圳市', value: 1980, volume: 7553, sum: 12512, rate: 52 },
+        { name: '揭阳市', value: 1540, volume: 236, sum: 123, rate: 12 },
+        { name: '汕头市', value: 1620, volume: 123, sum: 51231, rate: 52 },
+        { name: '汕尾市', value: 0, volume: 5123, sum: 5121, rate: 25 },
+        { name: '花都区', value: 0, volume: 5123, sum: 5121, rate: 25 },
+        { name: '东莞市', value: 1320, volume: 5236, sum: 5612, rate: 45 }
+      ],
       date: '全部',
       chart: null,
       districtExplorer: null
@@ -151,17 +175,30 @@ export default {
 
         tooltip: {
           trigger: 'item',
-          formatter: `
-          {b}
-          <br/>
-          客户数 2315人
-          <br/>
-          交易数 452笔
-          <br/>
-          交易额 4854575元
-          <br/>
-          客户浓度 56%
+          formatter: (item) => {
+            if (!item.data) {
+              return `暂无数据`
+            }
+            return `
+          <div style="padding:2px 6px">
+            <div style="font-weight:700;padding-bottom:6px;color:#333333;font-size:15px;">
+              ${item.name}
+            </div>
+            <div style="padding-bottom:2px;">
+              · 客户数<span style="color:#333333;margin-left:6px;">${item.data.value}人</span>
+            </div>
+            <div style="padding-bottom:2px;">
+              · 交易数<span style="color:#333333;margin-left:6px;">${item.data.volume}笔</span>
+            </div>
+            <div style="padding-bottom:2px;">
+              · 交易额<span style="color:#333333;margin-left:6px;">${item.data.sum}元</span>
+            </div>
+            <div style="padding-bottom:2px;">
+              · 客户浓度<span style="color:#333333;margin-left:6px;">${item.data.rate}%</span>
+            </div>  
+          </div>
           `
+          }
         },
         visualMap: {
           show: false,
@@ -181,29 +218,7 @@ export default {
             label: {
               show: true
             },
-            data: [
-              { name: '肇庆市', cityCode: 440100, value: 0 },
-              { name: '清远市', cityCode: 440100, value: 1200 },
-              { name: '韶关市', cityCode: 440100, value: 2001 },
-              { name: '广州市', cityCode: 440100, value: 4800 },
-              { name: '惠州市', cityCode: 440100, value: 1100 },
-              { name: '河源市', cityCode: 440100, value: 1120 },
-              { name: '梅州市', cityCode: 440100, value: 3000 },
-              { name: '潮州市', cityCode: 440100, value: 1620 },
-              { name: '云浮市', cityCode: 440100, value: 1500 },
-              { name: '江门市', cityCode: 440100, value: 1800 },
-              { name: '中山市', cityCode: 440100, value: 1200 },
-              { name: '珠海市', cityCode: 440100, value: 1000 },
-              { name: '佛山市', cityCode: 440100, value: 2227 },
-              { name: '茂名市', cityCode: 440100, value: 1001 },
-              { name: '湛江市', cityCode: 440100, value: 10 },
-              { name: '阳江市', cityCode: 440100, value: 2800 },
-              { name: '深圳市', cityCode: 440100, value: 1980 },
-              { name: '揭阳市', cityCode: 440100, value: 1540 },
-              { name: '汕头市', cityCode: 440100, value: 1620 },
-              { name: '汕尾市', cityCode: 440100, value: 0 },
-              { name: '东莞市', cityCode: 440100, value: 1320 }
-            ]
+            data: this.chartData
 
           }
         ]
@@ -249,23 +264,23 @@ export default {
 
 @media screen and (max-width: 630px) {
   .container {
-  height: 560px;
-  flex-direction: column;
-  .tree-query-box {
-    width: 100%;
-    height: 200px;
-    overflow: auto;
-    border: 1px solid #efefef;
+    height: 560px;
+    flex-direction: column;
+    .tree-query-box {
+      width: 100%;
+      height: 200px;
+      overflow: auto;
+      border: 1px solid #efefef;
 
-    border-bottom: 0;
-  }
-  .chart-box {
-  flex: 1;
-  > div {
-    border: 1px solid #efefef;
-    height: 100%;
-  }
-}
+      border-bottom: 0;
+    }
+    .chart-box {
+      flex: 1;
+      > div {
+        border: 1px solid #efefef;
+        height: 100%;
+      }
+    }
   }
 }
 </style>

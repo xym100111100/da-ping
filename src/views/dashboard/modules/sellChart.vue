@@ -24,7 +24,29 @@ export default {
     return {
       date: '本周',
       rangeDate: null,
-      legendData: ['大米', '大豆', '食用油', '面粉'],
+      chartData: [
+        { name: '肇庆市', rice: 670, soya: 763, edibleOil: 452, flour: 521 },
+        { name: '清远市', rice: 1200, soya: 51, edibleOil: 215, flour: 756 },
+        { name: '韶关市', rice: 2001, soya: 1121, edibleOil: 1221, flour: 521 },
+        { name: '广州市', rice: 4800, soya: 234, edibleOil: 1223, flour: 162 },
+        { name: '惠州市', rice: 1100, soya: 1211, edibleOil: 5421, flour: 434 },
+        { name: '河源市', rice: 1120, soya: 235, edibleOil: 3121, flour: 252 },
+        { name: '梅州市', rice: 3000, soya: 3623, edibleOil: 1251, flour: 2333 },
+        { name: '潮州市', rice: 1620, soya: 1245, edibleOil: 1253, flour: 511 },
+        { name: '云浮市', rice: 1500, soya: 3533, edibleOil: 5124, flour: 652 },
+        { name: '江门市', rice: 1800, soya: 3213, edibleOil: 1223, flour: 533 },
+        { name: '中山市', rice: 1200, soya: 623, edibleOil: 2513, flour: 254 },
+        { name: '珠海市', rice: 1000, soya: 123, edibleOil: 1523, flour: 522 },
+        { name: '佛山市', rice: 2227, soya: 513, edibleOil: 1245, flour: 233 },
+        { name: '茂名市', rice: 1001, soya: 562, edibleOil: 1524, flour: 552 },
+        { name: '湛江市', rice: 10, soya: 1233, edibleOil: 1685, flour: 623 },
+        { name: '阳江市', rice: 2800, soya: 1632, edibleOil: 523, flour: 263 },
+        { name: '深圳市', rice: 1980, soya: 2553, edibleOil: 1251, flour: 252 },
+        { name: '揭阳市', rice: 1540, soya: 236, edibleOil: 3123, flour: 612 },
+        { name: '汕头市', rice: 1620, soya: 123, edibleOil: 1231, flour: 352 },
+        { name: '汕尾市', rice: 0, soya: 2123, edibleOil: 5121, flour: 275 },
+        { name: '东莞市', rice: 1320, soya: 5236, edibleOil: 5612, flour: 845 }
+      ],
       chart: null
     }
   },
@@ -57,10 +79,41 @@ export default {
       this.chart = echarts.init(this.$refs.main)
       // 指定图表的配置项和数据
       var option = {
-        color: ['#5bcbff', '#52d9f5', '#7ea4fd', '#63e6f0'],
-        tooltip: {},
+        color: ['#5bcbff', '#46ebbf', '#7ea4fd', '#63e6f0'],
+        tooltip: {
+          trigger: 'item',
+          formatter: ({ name }) => {
+            let data = 0
+            this.chartData.forEach(item => {
+              if (item.name === name) {
+                data = item
+              }
+            })
+            if (!data) {
+              return `暂无数据`
+            }
+            return `
+          <div style="padding:2px 6px">
+            <div style="font-weight:700;padding-bottom:6px;color:#333333;font-size:15px;">
+              ${name}
+            </div>
+            <div style="padding-bottom:2px;">
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#5bcbff;"></span> 大米<span style="color:#323232;margin-left:6px;">${data.rice}吨</span>
+            </div>
+            <div style="padding-bottom:2px;">
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#46ebbf;"></span> 大豆<span style="color:#323232;margin-left:6px;">${data.soya}吨</span>
+            </div>
+            <div style="padding-bottom:2px;">
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#7ea4fd;"></span> 食用油<span style="color:#323232;margin-left:6px;">${data.edibleOil}元</span>
+            </div>
+            <div style="padding-bottom:2px;">
+              <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#63e6f0;"></span> 面粉<span style="color:#323232;margin-left:6px;">${data.flour}吨</span>
+            </div>  
+          </div>
+          `
+          }
+        },
         legend: {
-          data: this.legendData
         },
         grid: {
           left: '1%',
@@ -71,7 +124,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['广州市', '汕头市', '揭阳市', '潮州市', '汕尾市', '梅州市', '梅州市', '河源市', '清远市'],
+          data: this.chartData.map(item => item.name),
           axisLabel: {
             textStyle: {
               color: '#666'
@@ -102,19 +155,19 @@ export default {
         series: [{
           name: '大米',
           type: 'bar',
-          data: [3000, 2220, 3323, 2235, 2235, 5234, 6220, 2323, 5235]
+          data: this.chartData.map(item => item.rice)
         }, {
           name: '大豆',
           type: 'bar',
-          data: [3533, 2433, 4242, 4235, 4235, 2230, 2220, 7323, 3235]
+          data: this.chartData.map(item => item.soya)
         }, {
           name: '食用油',
           type: 'bar',
-          data: [5444, 4220, 2234, 5235, 5234, 2523, 4220, 2323, 5235]
+          data: this.chartData.map(item => item.edibleOil)
         }, {
           name: '面粉',
           type: 'bar',
-          data: [5234, 5220, 4235, 12350, 6236, 2234, 6220, 5323, 8335]
+          data: this.chartData.map(item => item.flour)
         }]
       }
 

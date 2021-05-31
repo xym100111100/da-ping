@@ -1,7 +1,7 @@
 <template>
   <span class="number-scroll-box">
     <transition-group class="list-box" name="list" tag="span">
-      <span v-for="(item,index) in String(value)" :key="item + index" class="number-item">
+      <span v-for="(item,index) in valueString" :key="item + index" class="number-item">
         <span class="number-box">
           {{ item }}
         </span>
@@ -25,6 +25,7 @@ export default {
   },
   data() {
     return {
+      valueString: '0',
       showImg: false
     }
   },
@@ -34,13 +35,48 @@ export default {
      * @param {*}
      * @return {*}
      */
-    value() {
-      this.showImg = false
-      setTimeout(() => {
-        this.showImg = true
-      }, 1)
+    value: {
+      handler(val) {
+        const str = String(val)
+        for (let i = 0; i < str.length; i++) {
+          this.changeValue(str[i], i, str)
+        }
+        this.showImg = false
+        setTimeout(() => {
+          this.showImg = true
+        }, 1)
+      },
+      immediate: true
     }
-
+  },
+  methods: {
+    /**
+     * @description: 异步单独修改字符
+     * @param {*} char
+     * @param {*} i
+     * @param {*} str
+     * @return {*}
+     */
+    changeValue(char, i, str) {
+      setTimeout(() => {
+        if (i > this.valueString.length - 1) {
+          this.valueString += char
+        }
+        const value = this.setCharAt(this.valueString, i, char)
+        this.valueString = value
+      }, 1)
+    },
+    /**
+     * @description: 修改自定位置字符
+     * @param {*} str
+     * @param {*} index
+     * @param {*} chr
+     * @return {*}
+     */
+    setCharAt(str, index, chr) {
+      if (index > str.length - 1) return str
+      return str.substr(0, index) + chr + str.substr(index + 1)
+    }
   }
 
 }

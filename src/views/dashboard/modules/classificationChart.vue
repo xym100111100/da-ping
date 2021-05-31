@@ -14,6 +14,13 @@ export default {
   mixins: [Resize],
   data() {
     return {
+      chartData: [
+        { value: 1048, name: '大米' },
+        { value: 735, name: '大豆' },
+        { value: 580, name: '面' },
+        { value: 484, name: '油' },
+        { value: 300, name: '其他' }
+      ],
       timeInterval: null,
       chartIndex: 0,
       chart: null
@@ -47,15 +54,29 @@ export default {
           itemWidth: 20,
           itemHeight: 10,
           itemGap: 16,
-          formatter: function(e) {
-            return e + '  1510'
+          formatter: (name) => {
+            let itemValue = 0
+            this.chartData.forEach(item => {
+              if (item.name === name) {
+                itemValue = item.value
+              }
+            })
+
+            return `{a|${name}}{b|${itemValue}}`
+          },
+          textStyle: {
+            rich: {
+              b: {
+                padding: [0, 0, 0, 12]
+              }
+            }
           }
         },
         series: [
           {
             name: '分类销售占比',
             type: 'pie',
-            right: '60',
+            right: '70',
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
             label: {
@@ -83,13 +104,7 @@ export default {
             labelLine: {
               show: false
             },
-            data: [
-              { value: 1048, name: '大米' },
-              { value: 735, name: '大豆' },
-              { value: 580, name: '面' },
-              { value: 484, name: '油' },
-              { value: 300, name: '其他' }
-            ]
+            data: this.chartData
           }
         ]
       }
