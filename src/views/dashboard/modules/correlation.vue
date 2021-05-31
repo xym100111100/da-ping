@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      orderSize: 12055,
+      orderSize: 0,
       config: {
         headerBGC: '#f0faff',
         oddRowBGC: '#ffffff',
@@ -93,8 +93,8 @@ export default {
   },
   mounted() {
     setInterval(() => {
-      this.orderSize += 56
-    }, 3000)
+      this.orderSize += 23
+    }, 2000)
   }
 
 }
