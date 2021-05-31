@@ -89,7 +89,7 @@ export default {
           {
             name: '分类销售占比',
             type: 'pie',
-            right: '130',
+            right: '150',
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
             label: {
