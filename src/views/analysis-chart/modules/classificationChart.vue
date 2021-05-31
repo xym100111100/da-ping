@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="card-title">
-      <span>分类销售占比</span>
+      <span>分类销售统计</span>
     </div>
     <div class="container-box">
       <div ref="main" class="chart-box" @mouseover="clearAction" @mouseout="dispatchActionChart" />
@@ -62,10 +62,8 @@ export default {
           itemHeight: 10,
           itemGap: 16,
           formatter: (name) => {
-            console.log(name)
             let itemValue = 0
             let total = 0
-            console.log(this.chartData)
             this.chartData.forEach(item => {
               total += item.value
               if (item.name === name) {
