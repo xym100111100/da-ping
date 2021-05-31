@@ -25,6 +25,7 @@ export default {
      * @return {*}
      */
     resize() {
+      if (!this.chart) return false
       this.chart.resize()
     }
   },
