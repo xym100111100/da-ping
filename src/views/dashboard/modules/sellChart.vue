@@ -57,7 +57,7 @@ export default {
       this.chart = echarts.init(this.$refs.main)
       // 指定图表的配置项和数据
       var option = {
-        color: ['#5bcbff', '#52d9f5', '#7ea4fd', '#63e6f0'],
+        color: ['#5bcbff', '#46ebbf', '#7ea4fd', '#63e6f0'],
         tooltip: {},
         legend: {
           data: this.legendData
