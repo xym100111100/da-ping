@@ -94,14 +94,14 @@ export default {
   mounted() {
     setInterval(() => {
       this.orderSize += 56
-    }, 2000)
+    }, 3000)
   }
 
 }
 </script>
 <style lang="scss" scoped>
 .chart-box {
-  height: 620px;
+  height: 640px;
 
   .item-box {
     margin-left: 2px;
@@ -164,7 +164,7 @@ export default {
 }
 
 .scroll-table-box {
-  border: 1px solid #efefef;
+  border: 1px solid #ebeef5;
   height: 180px;
 }
 </style>
