@@ -182,6 +182,7 @@ export default {
 
   .chart-box{
     height: 100%;
+
   }
 
 </style>
