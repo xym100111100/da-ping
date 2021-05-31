@@ -118,7 +118,33 @@ export default {
       // 指定图表的配置项和数据
       var option = {
         color: ['#32c5ff', '#facc4d'],
-        tooltip: {},
+        tooltip: {
+          trigger: 'item',
+          formatter: ({ name }) => {
+            let data = 0
+            this.chartData.forEach(item => {
+              if (item.name === name) {
+                data = item
+              }
+            })
+            if (!data) {
+              return `暂无数据`
+            }
+            return `
+          <div style="padding:2px 6px">
+            <div style="font-weight:700;padding-bottom:6px;color:#333333;font-size:15px;">
+              ${name}
+            </div>
+            <div style="padding-bottom:2px;">
+              · 达标<span style="color:#323232;margin-left:6px;">${data.qualifiedCount}</span>
+            </div>
+            <div style="padding-bottom:2px;">
+              · 不达标<span style="color:#323232;margin-left:6px;">${data.disqualifiedCount}</span>
+            </div>  
+          </div>
+          `
+          }
+        },
         legend: {
           data: ['达标', '不达标']
         },
