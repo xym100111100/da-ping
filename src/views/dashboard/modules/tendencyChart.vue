@@ -82,9 +82,7 @@ export default {
           boundaryGap: false,
           data: this.chartData.map(item => item.time),
           axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
+            color: '#666'
           },
           axisLine: {
             lineStyle: {
@@ -95,9 +93,7 @@ export default {
         yAxis: {
           type: 'value',
           axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
+            color: '#666'
           },
           axisLine: {
             show: true,
@@ -113,7 +109,7 @@ export default {
             type: 'line',
             smooth: true,
             symbol: 'none',
-            areaStyle: { normal: {
+            areaStyle: {
               // 折线渐变色
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                 offset: 0, color: '#81befd'
@@ -123,7 +119,7 @@ export default {
                 offset: 1, color: '#fff'
               }]
               )
-            }},
+            },
             data: this.chartData.map(item => item.value)
           }
         ]

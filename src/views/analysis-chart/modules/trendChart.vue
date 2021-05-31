@@ -144,9 +144,7 @@ export default {
           boundaryGap: false,
           data: this.chartData.map(item => item.name),
           axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
+            color: '#666'
           },
           axisLine: {
             lineStyle: {
@@ -157,9 +155,7 @@ export default {
         yAxis: {
           type: 'value',
           axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
+            color: '#666'
           },
           axisLine: {
             show: true,
@@ -175,17 +171,15 @@ export default {
             type: 'line',
             symbol: 'none',
             areaStyle: {
-              normal: {
-                // 折线渐变色
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0, color: '#81befd'
-                }, {
-                  offset: 0.4, color: '#e4f2ff'
-                }, {
-                  offset: 1, color: '#fff'
-                }]
-                )
-              }
+              // 折线渐变色
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0, color: '#81befd'
+              }, {
+                offset: 0.4, color: '#e4f2ff'
+              }, {
+                offset: 1, color: '#fff'
+              }]
+              )
             },
             data: this.chartData.map(item => item.total)
           },
@@ -194,17 +188,15 @@ export default {
             type: 'line',
             symbol: 'none',
             areaStyle: {
-              normal: {
-                // 折线渐变色
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0, color: '#98e2e3'
-                }, {
-                  offset: 0.4, color: '#bbeced'
-                }, {
-                  offset: 1, color: '#fff'
-                }]
-                )
-              }
+              // 折线渐变色
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0, color: '#98e2e3'
+              }, {
+                offset: 0.4, color: '#bbeced'
+              }, {
+                offset: 1, color: '#fff'
+              }]
+              )
             },
             data: this.chartData.map(item => item.inCount)
           },
@@ -213,17 +205,15 @@ export default {
             type: 'line',
             symbol: 'none',
             areaStyle: {
-              normal: {
-                // 折线渐变色
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0, color: '#fde9af'
-                }, {
-                  offset: 0.4, color: '#f3f5e4'
-                }, {
-                  offset: 1, color: '#fff'
-                }]
-                )
-              }
+              // 折线渐变色
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0, color: '#fde9af'
+              }, {
+                offset: 0.4, color: '#f3f5e4'
+              }, {
+                offset: 1, color: '#fff'
+              }]
+              )
             },
             data: this.chartData.map(item => item.outCount)
           }

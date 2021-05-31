@@ -20,40 +20,83 @@ export default {
   data() {
     return {
       chartData: [
-        { name: '肇庆市', value: 0, volume: 63, sum: 452, rate: 51 },
-        { name: '清远市', value: 1200, volume: 51, sum: 215, rate: 76 },
-        { name: '韶关市', value: 2001, volume: 12121, sum: 12521, rate: 21 },
-        { name: '广州市', value: 4800, volume: 234, sum: 123123, rate: 12 },
-        { name: '惠州市', value: 1100, volume: 12121, sum: 421, rate: 44 },
-        { name: '河源市', value: 1120, volume: 235, sum: 51251, rate: 22 },
-        { name: '梅州市', value: 3000, volume: 12121, sum: 1251, rate: 33 },
-        { name: '潮州市', value: 1620, volume: 1245, sum: 123, rate: 11 },
-        { name: '云浮市', value: 1500, volume: 12121, sum: 5124, rate: 62 },
-        { name: '江门市', value: 1800, volume: 5213, sum: 123, rate: 53 },
-        { name: '中山市', value: 1200, volume: 12121, sum: 45213, rate: 24 },
-        { name: '珠海市', value: 1000, volume: 123, sum: 123, rate: 52 },
-        { name: '佛山市', value: 2227, volume: 513, sum: 1245, rate: 23 },
-        { name: '茂名市', value: 1001, volume: 562, sum: 124, rate: 52 },
-        { name: '湛江市', value: 10, volume: 1233, sum: 5123, rate: 63 },
-        { name: '阳江市', value: 2800, volume: 56232, sum: 523, rate: 23 },
-        { name: '深圳市', value: 1980, volume: 7553, sum: 12512, rate: 52 },
-        { name: '揭阳市', value: 1540, volume: 236, sum: 123, rate: 12 },
-        { name: '汕头市', value: 1620, volume: 123, sum: 51231, rate: 52 },
-        { name: '汕尾市', value: 0, volume: 5123, sum: 5121, rate: 25 },
-        { name: '东莞市', value: 1320, volume: 5236, sum: 5612, rate: 45 }
+        { name: '肇庆市', value: 0, volume: 63, sum: 452, rate: 51, cityCode: 441200 },
+        { name: '清远市', value: 1200, volume: 51, sum: 215, rate: 76, cityCode: 441800 },
+        { name: '韶关市', value: 2001, volume: 12121, sum: 12521, rate: 21, cityCode: 440200 },
+        { name: '广州市', value: 4800, volume: 234, sum: 123123, rate: 12, cityCode: 440100 },
+        { name: '惠州市', value: 1100, volume: 12121, sum: 421, rate: 44, cityCode: 441300 },
+        { name: '河源市', value: 1120, volume: 235, sum: 51251, rate: 22, cityCode: 441600 },
+        { name: '梅州市', value: 3000, volume: 12121, sum: 1251, rate: 33, cityCode: 441400 },
+        { name: '潮州市', value: 1620, volume: 1245, sum: 123, rate: 11, cityCode: 445100 },
+        { name: '云浮市', value: 1500, volume: 12121, sum: 5124, rate: 62, cityCode: 445300 },
+        { name: '江门市', value: 1800, volume: 5213, sum: 123, rate: 53, cityCode: 440700 },
+        { name: '中山市', value: 1200, volume: 12121, sum: 45213, rate: 24, cityCode: 442000 },
+        { name: '珠海市', value: 1000, volume: 123, sum: 123, rate: 52, cityCode: 440400 },
+        { name: '佛山市', value: 2227, volume: 513, sum: 1245, rate: 23, cityCode: 440600 },
+        { name: '茂名市', value: 1001, volume: 562, sum: 124, rate: 52, cityCode: 440900 },
+        { name: '湛江市', value: 10, volume: 1233, sum: 5123, rate: 63, cityCode: 440800 },
+        { name: '阳江市', value: 2800, volume: 56232, sum: 523, rate: 23, cityCode: 441700 },
+        { name: '深圳市', value: 1980, volume: 7553, sum: 12512, rate: 52, cityCode: 440300 },
+        { name: '揭阳市', value: 1540, volume: 236, sum: 123, rate: 12, cityCode: 445200 },
+        { name: '汕头市', value: 1620, volume: 123, sum: 51231, rate: 52, cityCode: 440500 },
+        { name: '汕尾市', value: 0, volume: 5123, sum: 5121, rate: 25, cityCode: 441500 },
+        { name: '花都区', value: 0, volume: 5123, sum: 5121, rate: 25 },
+        { name: '东莞市', value: 1320, volume: 5236, sum: 5612, rate: 45, cityCode: 441900 }
       ],
       date: '全部',
       chart: null,
       districtExplorer: null
     }
   },
+  computed: {
+    cityCode() {
+      return this.$route.query.cityCode || 440000
+    }
+  },
+  watch: {
+    cityCode(e) {
+      if (e) {
+        this.setChartOption(e)
+      }
+    }
+  },
   async created() {
     await this.initAmap()
     this.$nextTick(() => {
-      this.initChart()
+      this.chart = echarts.init(this.$refs.main)
+      // 首次初始化地图配置
+      this.setChartOption(440000)
+      // 监听地图点击事件
+      this.chart.on('click', this.echartsMapClick)
     })
   },
+
   methods: {
+    /**
+     * @description: 切换路由
+     * @param {*}
+     * @return {*}
+     */
+    to(cityCode) {
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          cityCode
+        }
+      })
+    },
+
+    /**
+     * @description: 地图切换
+     * @param {*} params
+     * @return {*}
+     */
+    echartsMapClick(params) {
+      if (params.data && params.data.cityCode) {
+        this.to(params.data.cityCode)
+        this.setChartOption(params.data.cityCode)
+      }
+    },
     /**
      * @description: 查询行政边界
      * @param {number} adcode 可参考城市编码表 https://lbs.amap.com/api/webservice/download
@@ -94,14 +137,15 @@ export default {
         }
       })
     },
+
     /**
-     * @description: 初始化图表
-     * @param {*}
+     * @description: 配置图表option
+     * @param {number} adcode 可参考城市编码表 https://lbs.amap.com/api/webservice/download
      * @return {*}
      */
-    async initChart() {
+    async setChartOption(adcode) {
       // 获取区域节点对象
-      const AreaNode = await this.loadAreaNode(440000)
+      const AreaNode = await this.loadAreaNode(adcode)
       // 获取区域名称
       const mapName = AreaNode.getName()
 
@@ -111,9 +155,7 @@ export default {
       // 设置类型为FeatureCollection
       geoJson.type = 'FeatureCollection'
 
-      this.chart = echarts.init(this.$refs.main)
-
-      // 地理信息注册，option中的mapType需要与注册的mapName值一样
+      // 地理信息注册，option中的map需要与注册的mapName值一样
       echarts.registerMap(mapName, geoJson)
 
       // 指定图表的配置项和数据
@@ -160,7 +202,7 @@ export default {
           {
             name: '数据展示',
             type: 'map',
-            mapType: mapName,
+            map: mapName,
             top: 20,
             bottom: 20,
             label: {
@@ -174,6 +216,7 @@ export default {
 
       // 使用刚指定的配置项和数据显示图表。
       this.chart.setOption(option)
+      this.chart.resize()
     }
   }
 }
