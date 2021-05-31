@@ -247,9 +247,25 @@ export default {
   }
 }
 
-@media screen and (max-width: 560px) {
-  .redio-date {
-    display: none;
+@media screen and (max-width: 630px) {
+  .container {
+  height: 560px;
+  flex-direction: column;
+  .tree-query-box {
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #efefef;
+
+    border-bottom: 0;
+  }
+  .chart-box {
+  flex: 1;
+  > div {
+    border: 1px solid #efefef;
+    height: 100%;
+  }
+}
   }
 }
 </style>

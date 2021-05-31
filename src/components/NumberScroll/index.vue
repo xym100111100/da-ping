@@ -95,6 +95,7 @@ export default {
 // 过渡动画
 .list-item {
   display: inline-block;
+  position: relative;
 }
 .list-enter-active,
 .list-leave-active {
