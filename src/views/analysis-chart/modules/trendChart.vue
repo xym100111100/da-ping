@@ -174,51 +174,57 @@ export default {
             name: '库存总量',
             type: 'line',
             symbol: 'none',
-            areaStyle: { normal: {
-              // 折线渐变色
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0, color: '#81befd'
-              }, {
-                offset: 0.4, color: '#e4f2ff'
-              }, {
-                offset: 1, color: '#fff'
-              }]
-              )
-            }},
+            areaStyle: {
+              normal: {
+                // 折线渐变色
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0, color: '#81befd'
+                }, {
+                  offset: 0.4, color: '#e4f2ff'
+                }, {
+                  offset: 1, color: '#fff'
+                }]
+                )
+              }
+            },
             data: this.chartData.map(item => item.total)
           },
           {
             name: '入库量',
             type: 'line',
             symbol: 'none',
-            areaStyle: { normal: {
-              // 折线渐变色
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0, color: '#98e2e3'
-              }, {
-                offset: 0.4, color: '#bbeced'
-              }, {
-                offset: 1, color: '#fff'
-              }]
-              )
-            }},
+            areaStyle: {
+              normal: {
+                // 折线渐变色
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0, color: '#98e2e3'
+                }, {
+                  offset: 0.4, color: '#bbeced'
+                }, {
+                  offset: 1, color: '#fff'
+                }]
+                )
+              }
+            },
             data: this.chartData.map(item => item.inCount)
           },
           {
             name: '出库量',
             type: 'line',
             symbol: 'none',
-            areaStyle: { normal: {
-              // 折线渐变色
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0, color: '#fde9af'
-              }, {
-                offset: 0.4, color: '#f3f5e4'
-              }, {
-                offset: 1, color: '#fff'
-              }]
-              )
-            }},
+            areaStyle: {
+              normal: {
+                // 折线渐变色
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0, color: '#fde9af'
+                }, {
+                  offset: 0.4, color: '#f3f5e4'
+                }, {
+                  offset: 1, color: '#fff'
+                }]
+                )
+              }
+            },
             data: this.chartData.map(item => item.outCount)
           }
         ]
@@ -231,8 +237,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .chart-box{
-    height: 320px;
+.chart-box {
+  height: 320px;
+}
+@media screen and (max-width: 600px) {
+  .chart-box {
+    height: 180px;
   }
-
+}
 </style>

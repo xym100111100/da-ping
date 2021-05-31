@@ -186,5 +186,9 @@ export default {
   align-items: center;
   height: 18px;
 }
-
+@media screen and (max-width: 600px) {
+ .chart-box {
+    height: 180px;
+  }
+}
 </style>

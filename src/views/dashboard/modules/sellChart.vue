@@ -145,4 +145,9 @@ export default {
     display: none;
   }
 }
+@media screen and (max-width: 600px) {
+  .chart-box {
+    height: 240px;
+  }
+}
 </style>
