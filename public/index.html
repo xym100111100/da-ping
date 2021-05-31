@@ -9,6 +9,16 @@
     />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= webpackConfig.name %></title>
+
+    <!-- 高德地图 用于获取行政区域边界 start  -->
+    <script
+      type="text/javascript"
+      src="https://webapi.amap.com/maps?v=2.0&key=35a871e5905ecfd749bd998448b9cd03"
+    ></script>
+    <!-- UI组件库 1.0 需要UI组件实例中的loadAreaNode方法 -->
+    <script src="https://webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+    <!-- 高德地图 end  -->
+    
   </head>
   <body>
     <noscript>
@@ -18,15 +28,7 @@
       >
     </noscript>
     <div id="app"></div>
+
     <!-- built files will be auto injected -->
   </body>
-
-  <!-- 高德地图 用于获取行政区域边界 start  -->
-  <script
-    type="text/javascript"
-    src="https://webapi.amap.com/maps?v=2.0&key=35a871e5905ecfd749bd998448b9cd03"
-  ></script>
-    <!-- UI组件库 1.0 需要UI组件实例中的loadAreaNode方法 -->
-  <script src="https://webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
-  <!-- 高德地图 end  -->
 </html>
