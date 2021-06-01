@@ -3,7 +3,7 @@
     <div slot="header" class="card-title">
       <span>广东省成品粮库分布情况</span>
       <div>
-        <img v-show="level !== 1" class="back-img" src="../../../assets/images/d-back.png" @click="backRouter">
+        <img v-show="Number(level) !== 1" class="back-img" src="../../../assets/images/d-back.png" @click="backRouter">
         <img class="full-img" src="../../../assets/images/d-full.png" @click="toggleFull">
       </div>
     </div>
