@@ -126,9 +126,7 @@ export default {
           type: 'category',
           data: this.chartData.map(item => item.name),
           axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
+            color: '#666'
           },
           axisLine: {
             lineStyle: {
@@ -140,9 +138,7 @@ export default {
         yAxis: {
           type: 'value',
           axisLabel: {
-            textStyle: {
-              color: '#666'
-            }
+            color: '#666'
           },
           axisLine: {
             show: true,

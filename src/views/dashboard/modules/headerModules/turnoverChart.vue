@@ -88,17 +88,15 @@ export default {
             smooth: true,
             symbol: 'none',
             areaStyle: {
-              normal: {
-                // 折线渐变色
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0, color: '#f0e9f7'
-                }, {
-                  offset: 0.4, color: '#f9f6fc'
-                }, {
-                  offset: 1, color: '#fff'
-                }]
-                )
-              }
+              // 折线渐变色
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0, color: '#f0e9f7'
+              }, {
+                offset: 0.4, color: '#f9f6fc'
+              }, {
+                offset: 1, color: '#fff'
+              }]
+              )
             },
             data: this.chartData.map(item => item.value)
           }

@@ -64,9 +64,7 @@ export default {
             height: '94%',
             label: {
               formatter: '{b} {c}%',
-              textStyle: {
-                color: '#222'
-              }
+              color: '#222'
             },
             labelLine: {
               show: false
