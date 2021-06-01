@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="card-title">
-      <span>广州市消费人群各项指标汇总</span>
+      <span>广东省消费人群各项指标汇总</span>
       <el-radio-group v-model="date" class="redio-date" size="small">
         <el-radio-button label="全部">全部</el-radio-button>
         <el-radio-button label="本年">本年</el-radio-button>
