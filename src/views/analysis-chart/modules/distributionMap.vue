@@ -3,8 +3,8 @@
     <div slot="header" class="card-title">
       <span>广东省成品粮库分布情况</span>
       <div>
-        <img class="back-img" src="../../../assets/images/d-back.png">
-        <img class="full-img" src="../../../assets/images/d-full.png" @click="toggle">
+        <img v-show="level !== 1" class="back-img" src="../../../assets/images/d-back.png" @click="backRouter">
+        <img class="full-img" src="../../../assets/images/d-full.png" @click="toggleFull">
       </div>
     </div>
     <div class="container">
@@ -90,7 +90,10 @@ export default {
     })
   },
   methods: {
-    toggle() {
+    backRouter() {
+      this.$router.back()
+    },
+    toggleFull() {
       this.fullscreen = !this.fullscreen
 
       // 全屏显示时，则隐藏掉body的滚动条，防止滚动穿透
@@ -124,12 +127,12 @@ export default {
     selectTree(data) {
       if (data.cityCode) {
         // this.echartsMapClick(data.cityCode)
-        this.to(2, data.cityCode)
+        this.to(data.level, data.cityCode)
         return
       }
 
       // 切换到站点
-      this.to(3, undefined, data.label)
+      this.to(data.level, undefined, data.label)
     },
     /**
      * @description: 点击地图触发该函数

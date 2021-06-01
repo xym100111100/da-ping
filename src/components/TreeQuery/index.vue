@@ -15,52 +15,67 @@ export default {
       data: [{
         label: '广东省',
         cityCode: 440000,
+        level: 1,
         children: [{
           label: '广州市',
           cityCode: 440100,
+          level: 2,
           children: [{
-            label: 'xxx军供站'
+            label: 'xxx军供站',
+            level: 3
           }]
         }, {
           label: '佛山市',
           cityCode: 440600,
+          level: 2,
           children: [{
-            label: 'xxx军供站'
+            label: 'xxx军供站',
+            level: 3
           }]
         },
         {
           label: '中山市',
           cityCode: 440400,
+          level: 2,
           children: [{
-            label: 'xxx军供站'
+            label: 'xxx军供站',
+            level: 3
           }]
         },
         {
           label: '深圳市',
           cityCode: 440300,
+          level: 2,
           children: [{
-            label: 'xxx军供站'
+            label: 'xxx军供站',
+            level: 3
           }]
         },
         {
           label: '湛江市',
           cityCode: 440800,
+          level: 2,
           children: [{
-            label: 'xxx军供站'
+            label: 'xxx军供站',
+            level: 3
           }]
         },
         {
           label: '东莞市',
           cityCode: 440900,
+          level: 2,
           children: [{
-            label: 'xxx军供站'
+            label: 'xxx军供站',
+            level: 3
           }]
         },
         {
           label: '惠州市',
           cityCode: 441300,
+          level: 2,
           children: [{
-            label: 'xxx军供站'
+            label: 'xxx军供站',
+            level: 3
           }]
         }]
 
