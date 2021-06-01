@@ -20,7 +20,7 @@
   </el-card>
 </template>
 <script>
-import Resize from './mixin/resize.js'
+import Resize from '@/mixins/resize.js'
 import echarts from '@/components/useEcharts.js'
 import TreeQuery from '@/components/TreeQuery/index.vue'
 export default {
