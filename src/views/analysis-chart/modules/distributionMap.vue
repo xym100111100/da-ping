@@ -1,9 +1,10 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card map-card" :class="{'full-box':fullscreen}">
     <div slot="header" class="card-title">
       <span>广东省成品粮库分布情况</span>
       <div>
-        <el-icon class="el-icon-full-screen" />
+        <img class="back-img" src="../../../assets/images/d-back.png">
+        <img class="full-img" src="../../../assets/images/d-full.png" @click="toggle">
       </div>
     </div>
     <div class="container">
@@ -11,7 +12,6 @@
         <TreeQuery @select="selectTree" />
       </div>
       <div class="chart-box">
-
         <div v-show="level !== 3" ref="main" />
         <div v-show="level === 3">当前站点：{{ siteName }}</div>
       </div>
@@ -55,6 +55,7 @@ export default {
         { name: '花都区', value: 0, volume: 5123, sum: 5121, rate: 25 },
         { name: '东莞市', value: 1320, volume: 5236, sum: 5612, rate: 45, cityCode: 441900 }
       ],
+      fullscreen: false,
       date: '全部',
       chart: null,
       districtExplorer: null
@@ -89,6 +90,22 @@ export default {
     })
   },
   methods: {
+    toggle() {
+      this.fullscreen = !this.fullscreen
+
+      // 全屏显示时，则隐藏掉body的滚动条，防止滚动穿透
+      if (this.fullscreen) {
+        document.querySelector('body').style = 'overflow-y: hidden;'
+      } else {
+        document.querySelector('body').style = 'overflow-y: auto;'
+      }
+
+      // 延时刷新图表
+      setTimeout(() => {
+        this.chart.resize()
+      }, 280)
+    },
+
     /**
      * @description: 切换路由
      * @param {*}
@@ -248,7 +265,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .container {
-  height: 656px;
+  height: 100%;
   display: flex;
   .tree-query-box {
     width: 220px;
@@ -296,6 +313,29 @@ export default {
         height: 100%;
       }
     }
+  }
+}
+
+.box-card {
+  height: 725px;
+}
+.full-box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+}
+.back-img {
+  margin-right: 12px;
+}
+</style>
+<style lang="scss">
+.box-card.map-card {
+  .el-card__body {
+    height: 100%;
   }
 }
 </style>
