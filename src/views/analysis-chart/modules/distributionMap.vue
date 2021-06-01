@@ -12,7 +12,9 @@
         <TreeQuery @select="selectTree" />
       </div>
       <div class="chart-box">
-        <div v-show="level !== 3" ref="main" />
+        <div class="drag-box" @mousedown="startDrag" @mousemove="drag" @mouseleave="stopDrag" @mouseup="stopDrag">
+          <div v-show="level !== 3" ref="main" />
+        </div>
         <div v-show="level === 3">当前站点：{{ siteName }}</div>
       </div>
     </div>
@@ -57,6 +59,11 @@ export default {
       ],
       fullscreen: false,
       date: '全部',
+      dragStart: false,
+      dragX: 0,
+      dragY: 0,
+      domX: 0,
+      domY: 0,
       chart: null,
       districtExplorer: null
     }
@@ -90,6 +97,26 @@ export default {
     })
   },
   methods: {
+    startDrag(e) {
+      e.preventDefault()
+      this.dragStart = true
+      // 拖放元素的y轴坐标
+      this.dragX = e.clientX
+      this.dragY = e.clientY
+      this.domX = parseInt(this.$refs.main.style.left || 0)
+      this.domY = parseInt(this.$refs.main.style.top || 0)
+    },
+    drag(e) {
+      e.preventDefault()
+      if (this.dragStart) {
+        this.$refs.main.style.top = (this.domY + e.clientY - this.dragY) + 'px'
+        this.$refs.main.style.left = (this.domX + e.clientX - this.dragX) + 'px'
+      }
+    },
+    stopDrag(e) {
+      e.preventDefault()
+      this.dragStart = false
+    },
     backRouter() {
       this.$router.back()
     },
@@ -278,8 +305,14 @@ export default {
 .chart-box {
   flex: 1;
   height: 100%;
-  > div {
+  overflow: hidden;
+  .drag-box {
     height: 100%;
+    width: 100%;
+    > div {
+      height: 100%;
+      position: relative;
+    }
   }
 }
 
@@ -292,14 +325,16 @@ export default {
 
 // 屏幕小于992px时，调整盒子高度，以正常的比例展示
 @media screen and (max-width: 992px) {
-  .container {
-    height: 342px;
+  .box-card {
+    height: auto;
   }
 }
 
 @media screen and (max-width: 630px) {
+  .box-card {
+    height: 600px;
+  }
   .container {
-    height: 560px;
     flex-direction: column;
     .tree-query-box {
       width: 100%;
