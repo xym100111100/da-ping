@@ -12,9 +12,18 @@
         <TreeQuery @select="selectTree" />
       </div>
       <div class="chart-box">
-        <div class="drag-box" @mousedown="startDrag" @mousemove="drag" @mouseleave="stopDrag" @mouseup="stopDrag">
-          <div v-show="level !== 3" ref="main" />
+
+        <div class="parent-drag-box" @mousedown="startDrag" @mousemove="drag" @mouseleave="stopDrag" @mouseup="stopDrag">
+          <div class="action-box">
+            <div class="plus" @click="zoomIn" />
+            <div class="mini" @click="zoomOut" />
+          </div>
+          <div ref="drag" class="drag-box">
+            <div v-show="level !== 3" ref="main" class="map-box" />
+          </div>
+
         </div>
+
         <div v-show="level === 3">当前站点：{{ siteName }}</div>
       </div>
     </div>
@@ -83,6 +92,8 @@ export default {
     cityCode(e) {
       if (e && !this.siteName) {
         this.setChartOption(e)
+        this.zoomReset()
+        this.locationReset()
       }
     }
   },
@@ -97,22 +108,54 @@ export default {
     })
   },
   methods: {
+    // 放大元素
+    zoomIn() {
+      const t = this.$refs.main.style.transform
+      if (!t) {
+        this.$refs.main.style.transform = 'scale(1.1)'
+        return false
+      }
+      const num = t.replace(/[^0-9.]/ig, '')
+      this.$refs.main.style.transform = `scale(${Number(num) + 0.2})`
+    },
+    // 缩小元素
+    zoomOut() {
+      const t = this.$refs.main.style.transform
+      if (!t) {
+        this.$refs.main.style.transform = 'scale(0.9)'
+        return false
+      }
+      const num = t.replace(/[^0-9.]/ig, '')
+      this.$refs.main.style.transform = `scale(${Number(num) - 0.2})`
+    },
+    // 缩放重置
+    zoomReset() {
+      this.$refs.main.style.transform = `scale(1)`
+    },
+    // 位置重置
+    locationReset() {
+      this.$refs.drag.style.top = '0px'
+      this.$refs.drag.style.left = '0px'
+    },
+    // 拖拽开始
     startDrag(e) {
       e.preventDefault()
       this.dragStart = true
       // 拖放元素的y轴坐标
       this.dragX = e.clientX
       this.dragY = e.clientY
-      this.domX = parseInt(this.$refs.main.style.left || 0)
-      this.domY = parseInt(this.$refs.main.style.top || 0)
+      this.domX = parseInt(this.$refs.drag.style.left || 0)
+      this.domY = parseInt(this.$refs.drag.style.top || 0)
     },
+    // 拖拽中
     drag(e) {
       e.preventDefault()
       if (this.dragStart) {
-        this.$refs.main.style.top = (this.domY + e.clientY - this.dragY) + 'px'
-        this.$refs.main.style.left = (this.domX + e.clientX - this.dragX) + 'px'
+        this.$refs.drag.style.top = (this.domY + e.clientY - this.dragY) + 'px'
+        this.$refs.drag.style.left = (this.domX + e.clientX - this.dragX) + 'px'
       }
     },
+    // 拖拽结束
     stopDrag(e) {
       e.preventDefault()
       this.dragStart = false
@@ -306,12 +349,49 @@ export default {
   flex: 1;
   height: 100%;
   overflow: hidden;
-  .drag-box {
+  .parent-drag-box {
     height: 100%;
     width: 100%;
-    > div {
+    position: relative;
+    .drag-box {
       height: 100%;
+      width: 100%;
       position: relative;
+      > .map-box {
+      height: 100%;
+      transition: all 0.3s;
+    }
+    }
+
+    .action-box {
+      position: absolute;
+      right: 8px;
+      bottom: 52px;
+      width: 36px;
+      height: 72px;
+      background: #ffffff;
+      z-index: 99;
+
+      .plus,
+      .mini {
+        width: 36px;
+        height: 36px;
+        position: relative;
+        z-index: 99;
+      }
+      .plus {
+        background: url("../../../assets/images/map-plus.png");
+      }
+
+      .plus:active {
+        background: url("../../../assets/images/map-plus-active.png");
+      }
+      .mini {
+        background: url("../../../assets/images/map-mini.png");
+      }
+      .mini:active {
+        background: url("../../../assets/images/map-mini-active.png");
+      }
     }
   }
 }
