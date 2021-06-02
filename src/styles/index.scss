@@ -76,3 +76,14 @@ div:focus {
 
   }
 }
+
+// 全屏显示
+.full-box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999;
+  overflow: hidden;
+}

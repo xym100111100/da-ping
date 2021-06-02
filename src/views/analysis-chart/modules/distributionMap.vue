@@ -12,7 +12,6 @@
         <TreeQuery @select="selectTree" />
       </div>
       <div class="chart-box">
-
         <div class="parent-drag-box" @mousedown="startDrag" @mousemove="drag" @mouseleave="stopDrag" @mouseup="stopDrag">
           <div class="action-box">
             <div class="plus" @click="zoomIn" />
@@ -34,12 +33,13 @@
 import Resize from '@/mixins/resize.js'
 import echarts from '@/components/useEcharts.js'
 import TreeQuery from '@/components/TreeQuery/index.vue'
+import Zoom from '@/mixins/zoom'
 export default {
   name: 'DistributionMap',
   components: {
     TreeQuery
   },
-  mixins: [Resize],
+  mixins: [Resize, Zoom],
   data() {
     return {
       chartData: [
@@ -66,13 +66,7 @@ export default {
         { name: '花都区', value: 0, volume: 5123, sum: 5121, rate: 25 },
         { name: '东莞市', value: 1320, volume: 5236, sum: 5612, rate: 45, cityCode: 441900 }
       ],
-      fullscreen: false,
       date: '全部',
-      dragStart: false,
-      dragX: 0,
-      dragY: 0,
-      domX: 0,
-      domY: 0,
       chart: null,
       districtExplorer: null
     }
@@ -108,76 +102,6 @@ export default {
     })
   },
   methods: {
-    // 放大元素
-    zoomIn() {
-      const t = this.$refs.main.style.transform
-      if (!t) {
-        this.$refs.main.style.transform = 'scale(1.1)'
-        return false
-      }
-      const num = t.replace(/[^0-9.]/ig, '')
-      this.$refs.main.style.transform = `scale(${Number(num) + 0.2})`
-    },
-    // 缩小元素
-    zoomOut() {
-      const t = this.$refs.main.style.transform
-      if (!t) {
-        this.$refs.main.style.transform = 'scale(0.9)'
-        return false
-      }
-      const num = t.replace(/[^0-9.]/ig, '')
-      this.$refs.main.style.transform = `scale(${Number(num) - 0.2})`
-    },
-    // 缩放重置
-    zoomReset() {
-      this.$refs.main.style.transform = `scale(1)`
-    },
-    // 位置重置
-    locationReset() {
-      this.$refs.drag.style.top = '0px'
-      this.$refs.drag.style.left = '0px'
-    },
-    // 拖拽开始
-    startDrag(e) {
-      e.preventDefault()
-      this.dragStart = true
-      // 拖放元素的y轴坐标
-      this.dragX = e.clientX
-      this.dragY = e.clientY
-      this.domX = parseInt(this.$refs.drag.style.left || 0)
-      this.domY = parseInt(this.$refs.drag.style.top || 0)
-    },
-    // 拖拽中
-    drag(e) {
-      e.preventDefault()
-      if (this.dragStart) {
-        this.$refs.drag.style.top = (this.domY + e.clientY - this.dragY) + 'px'
-        this.$refs.drag.style.left = (this.domX + e.clientX - this.dragX) + 'px'
-      }
-    },
-    // 拖拽结束
-    stopDrag(e) {
-      e.preventDefault()
-      this.dragStart = false
-    },
-    backRouter() {
-      this.$router.back()
-    },
-    toggleFull() {
-      this.fullscreen = !this.fullscreen
-
-      // 全屏显示时，则隐藏掉body的滚动条，防止滚动穿透
-      if (this.fullscreen) {
-        document.querySelector('body').style = 'overflow-y: hidden;'
-      } else {
-        document.querySelector('body').style = 'overflow-y: auto;'
-      }
-
-      // 延时刷新图表
-      setTimeout(() => {
-        this.chart.resize()
-      }, 280)
-    },
 
     /**
      * @description: 切换路由
@@ -337,6 +261,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .box-card {
+  height: 725px;
+}
 .container {
   height: 100%;
   display: flex;
@@ -434,18 +361,6 @@ export default {
   }
 }
 
-.box-card {
-  height: 725px;
-}
-.full-box {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999;
-  overflow: hidden;
-}
 .back-img {
   margin-right: 12px;
 }
