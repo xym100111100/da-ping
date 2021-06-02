@@ -9,7 +9,7 @@
       </span>
     </transition-group>
     <transition enter-active-class="animate__bounceInUp">
-      <img v-show="showImg" class="up-img" src="../../assets/images/up.png" alt="">
+      <img v-show="showImg && value !== 0" class="up-img" src="../../assets/images/up.png" alt="">
     </transition>
   </span>
 </template>

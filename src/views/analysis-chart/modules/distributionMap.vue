@@ -1,9 +1,10 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card map-card" :class="{'full-box':fullscreen}">
     <div slot="header" class="card-title">
       <span>广东省成品粮库分布情况</span>
       <div>
-        <el-icon class="el-icon-full-screen" />
+        <img v-show="Number(level) !== 1" class="back-img" src="../../../assets/images/d-back.png" @click="backRouter">
+        <img class="full-img" src="../../../assets/images/d-full.png" @click="toggleFull">
       </div>
     </div>
     <div class="container">
@@ -12,7 +13,17 @@
       </div>
       <div class="chart-box">
 
-        <div v-show="level !== 3" ref="main" />
+        <div class="parent-drag-box" @mousedown="startDrag" @mousemove="drag" @mouseleave="stopDrag" @mouseup="stopDrag">
+          <div class="action-box">
+            <div class="plus" @click="zoomIn" />
+            <div class="mini" @click="zoomOut" />
+          </div>
+          <div ref="drag" class="drag-box">
+            <div v-show="level !== 3" ref="main" class="map-box" />
+          </div>
+
+        </div>
+
         <div v-show="level === 3">当前站点：{{ siteName }}</div>
       </div>
     </div>
@@ -20,7 +31,7 @@
   </el-card>
 </template>
 <script>
-import Resize from './mixin/resize.js'
+import Resize from '@/mixins/resize.js'
 import echarts from '@/components/useEcharts.js'
 import TreeQuery from '@/components/TreeQuery/index.vue'
 export default {
@@ -55,7 +66,13 @@ export default {
         { name: '花都区', value: 0, volume: 5123, sum: 5121, rate: 25 },
         { name: '东莞市', value: 1320, volume: 5236, sum: 5612, rate: 45, cityCode: 441900 }
       ],
+      fullscreen: false,
       date: '全部',
+      dragStart: false,
+      dragX: 0,
+      dragY: 0,
+      domX: 0,
+      domY: 0,
       chart: null,
       districtExplorer: null
     }
@@ -75,6 +92,8 @@ export default {
     cityCode(e) {
       if (e && !this.siteName) {
         this.setChartOption(e)
+        this.zoomReset()
+        this.locationReset()
       }
     }
   },
@@ -89,6 +108,77 @@ export default {
     })
   },
   methods: {
+    // 放大元素
+    zoomIn() {
+      const t = this.$refs.main.style.transform
+      if (!t) {
+        this.$refs.main.style.transform = 'scale(1.1)'
+        return false
+      }
+      const num = t.replace(/[^0-9.]/ig, '')
+      this.$refs.main.style.transform = `scale(${Number(num) + 0.2})`
+    },
+    // 缩小元素
+    zoomOut() {
+      const t = this.$refs.main.style.transform
+      if (!t) {
+        this.$refs.main.style.transform = 'scale(0.9)'
+        return false
+      }
+      const num = t.replace(/[^0-9.]/ig, '')
+      this.$refs.main.style.transform = `scale(${Number(num) - 0.2})`
+    },
+    // 缩放重置
+    zoomReset() {
+      this.$refs.main.style.transform = `scale(1)`
+    },
+    // 位置重置
+    locationReset() {
+      this.$refs.drag.style.top = '0px'
+      this.$refs.drag.style.left = '0px'
+    },
+    // 拖拽开始
+    startDrag(e) {
+      e.preventDefault()
+      this.dragStart = true
+      // 拖放元素的y轴坐标
+      this.dragX = e.clientX
+      this.dragY = e.clientY
+      this.domX = parseInt(this.$refs.drag.style.left || 0)
+      this.domY = parseInt(this.$refs.drag.style.top || 0)
+    },
+    // 拖拽中
+    drag(e) {
+      e.preventDefault()
+      if (this.dragStart) {
+        this.$refs.drag.style.top = (this.domY + e.clientY - this.dragY) + 'px'
+        this.$refs.drag.style.left = (this.domX + e.clientX - this.dragX) + 'px'
+      }
+    },
+    // 拖拽结束
+    stopDrag(e) {
+      e.preventDefault()
+      this.dragStart = false
+    },
+    backRouter() {
+      this.$router.back()
+    },
+    toggleFull() {
+      this.fullscreen = !this.fullscreen
+
+      // 全屏显示时，则隐藏掉body的滚动条，防止滚动穿透
+      if (this.fullscreen) {
+        document.querySelector('body').style = 'overflow-y: hidden;'
+      } else {
+        document.querySelector('body').style = 'overflow-y: auto;'
+      }
+
+      // 延时刷新图表
+      setTimeout(() => {
+        this.chart.resize()
+      }, 280)
+    },
+
     /**
      * @description: 切换路由
      * @param {*}
@@ -107,12 +197,12 @@ export default {
     selectTree(data) {
       if (data.cityCode) {
         // this.echartsMapClick(data.cityCode)
-        this.to(2, data.cityCode)
+        this.to(data.level, data.cityCode)
         return
       }
 
       // 切换到站点
-      this.to(3, undefined, data.label)
+      this.to(data.level, undefined, data.label)
     },
     /**
      * @description: 点击地图触发该函数
@@ -248,7 +338,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .container {
-  height: 656px;
+  height: 100%;
   display: flex;
   .tree-query-box {
     width: 220px;
@@ -258,8 +348,51 @@ export default {
 .chart-box {
   flex: 1;
   height: 100%;
-  > div {
+  overflow: hidden;
+  .parent-drag-box {
     height: 100%;
+    width: 100%;
+    position: relative;
+    .drag-box {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      > .map-box {
+      height: 100%;
+      transition: all 0.3s;
+    }
+    }
+
+    .action-box {
+      position: absolute;
+      right: 8px;
+      bottom: 52px;
+      width: 36px;
+      height: 72px;
+      background: #ffffff;
+      z-index: 99;
+
+      .plus,
+      .mini {
+        width: 36px;
+        height: 36px;
+        position: relative;
+        z-index: 99;
+      }
+      .plus {
+        background: url("../../../assets/images/map-plus.png");
+      }
+
+      .plus:active {
+        background: url("../../../assets/images/map-plus-active.png");
+      }
+      .mini {
+        background: url("../../../assets/images/map-mini.png");
+      }
+      .mini:active {
+        background: url("../../../assets/images/map-mini-active.png");
+      }
+    }
   }
 }
 
@@ -272,14 +405,16 @@ export default {
 
 // 屏幕小于992px时，调整盒子高度，以正常的比例展示
 @media screen and (max-width: 992px) {
-  .container {
-    height: 342px;
+  .box-card {
+    height: auto;
   }
 }
 
 @media screen and (max-width: 630px) {
+  .box-card {
+    height: 600px;
+  }
   .container {
-    height: 560px;
     flex-direction: column;
     .tree-query-box {
       width: 100%;
@@ -296,6 +431,29 @@ export default {
         height: 100%;
       }
     }
+  }
+}
+
+.box-card {
+  height: 725px;
+}
+.full-box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+}
+.back-img {
+  margin-right: 12px;
+}
+</style>
+<style lang="scss">
+.box-card.map-card {
+  .el-card__body {
+    height: 100%;
   }
 }
 </style>
