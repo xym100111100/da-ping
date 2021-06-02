@@ -3,7 +3,7 @@
     <div class="filter-input-box">
       <el-input v-model="filterText" placeholder="请输入关键词" size="small" suffix-icon="el-icon-search" />
     </div>
-    <el-tree ref="tree" :data="data" :props="defaultProps" :filter-node-method="filterNode" accordion @node-click="handleNodeClick" />
+    <el-tree ref="tree" :data="data" node-key="label" :default-expanded-keys="['广东省']" :props="defaultProps" :filter-node-method="filterNode" accordion @node-click="handleNodeClick" />
   </div>
 </template>
 
