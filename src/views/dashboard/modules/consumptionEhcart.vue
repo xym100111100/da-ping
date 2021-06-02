@@ -1,22 +1,44 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card map-card" :class="{'full-box':fullscreen}">
     <div slot="header" class="card-title">
       <span>广东省消费人群各项指标汇总</span>
-      <el-radio-group v-model="date" class="redio-date" size="small">
-        <el-radio-button label="全部">全部</el-radio-button>
-        <el-radio-button label="本年">本年</el-radio-button>
-        <el-radio-button label="本月">本月</el-radio-button>
-      </el-radio-group>
+      <div class="right-action">
+        <div class="icon-box">
+          <img v-show="cityCode!==440000" class="back-img" src="../../../assets/images/d-back.png" @click="backRouter">
+          <img class="full-img" src="../../../assets/images/d-full.png" @click="toggleFull">
+        </div>
+        <div class="btn-box">
+          <el-radio-group v-model="date" class="redio-date" size="small">
+            <el-radio-button label="全部">全部</el-radio-button>
+            <el-radio-button label="本年">本年</el-radio-button>
+            <el-radio-button label="本月">本月</el-radio-button>
+          </el-radio-group>
+        </div>
+
+      </div>
+
     </div>
-    <div ref="main" class="chart-box" />
+    <div class="chart-box">
+      <div class="parent-drag-box" @mousedown="startDrag" @mousemove="drag" @mouseleave="stopDrag" @mouseup="stopDrag">
+        <div class="action-box">
+          <div class="plus" @click="zoomIn" />
+          <div class="mini" @click="zoomOut" />
+        </div>
+        <div ref="drag" class="drag-box">
+          <div ref="main" class="map-box" />
+        </div>
+
+      </div>
+    </div>
   </el-card>
 </template>
 <script>
 import Resize from '@/mixins/resize.js'
 import echarts from '@/components/useEcharts.js'
+import Zoom from '@/mixins/zoom'
 export default {
   name: 'ElMap',
-  mixins: [Resize],
+  mixins: [Resize, Zoom],
   data() {
     return {
       chartData: [
@@ -57,6 +79,8 @@ export default {
     cityCode(e) {
       if (e) {
         this.setChartOption(e)
+        this.locationReset()
+        this.zoomReset()
       }
     }
   },
@@ -222,8 +246,71 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.box-card {
+  height: 651px;
+}
+
+.right-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  .icon-box {
+    display: flex;
+    align-items: center;
+    > img {
+      margin-right: 6px;
+    }
+  }
+}
 .chart-box {
-  height: 582px;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+
+  .parent-drag-box {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    .drag-box {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      > .map-box {
+        height: 100%;
+        transition: all 0.3s;
+      }
+    }
+    .action-box {
+      position: absolute;
+      right: 8px;
+      bottom: 52px;
+      width: 36px;
+      height: 72px;
+      background: #ffffff;
+      z-index: 99;
+
+      .plus,
+      .mini {
+        width: 36px;
+        height: 36px;
+        position: relative;
+        z-index: 99;
+      }
+      .plus {
+        background: url("../../../assets/images/map-plus.png");
+      }
+
+      .plus:active {
+        background: url("../../../assets/images/map-plus-active.png");
+      }
+      .mini {
+        background: url("../../../assets/images/map-mini.png");
+      }
+      .mini:active {
+        background: url("../../../assets/images/map-mini-active.png");
+      }
+    }
+  }
 }
 
 .card-title {
@@ -235,14 +322,21 @@ export default {
 
 // 屏幕小于992px时，调整盒子高度，以正常的比例展示
 @media screen and (max-width: 992px) {
-  .chart-box {
-    height: 342px;
+  .box-card {
+    height: 360px;
   }
 }
 
 @media screen and (max-width: 560px) {
   .redio-date {
     display: none;
+  }
+}
+</style>
+<style lang="scss">
+.box-card.map-card {
+  .el-card__body {
+    height: 100%;
   }
 }
 </style>
