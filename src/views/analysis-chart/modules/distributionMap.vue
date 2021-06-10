@@ -333,7 +333,7 @@ export default {
 // 屏幕小于992px时，调整盒子高度，以正常的比例展示
 @media screen and (max-width: 992px) {
   .box-card {
-    height: auto;
+    height: 600px;
   }
 }
 

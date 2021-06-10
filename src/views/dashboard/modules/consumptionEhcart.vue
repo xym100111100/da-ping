@@ -227,8 +227,6 @@ export default {
             name: '数据展示',
             type: 'map',
             map: mapName,
-            top: 20,
-            bottom: 20,
             label: {
               show: true
             },
